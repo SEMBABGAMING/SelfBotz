@@ -170,11 +170,7 @@ module.exports = nino = async (nino, mek) => {
         const isOwner = ownerNumber.includes(sender)
         const isWelkom = isGroup ? welkom.includes(from) : false
         
-        // here button function
-        selectedButton = (type == 'buttonsResponseMessage') ? mek.message.buttonsResponseMessage.selectedButtonId : ''
-
-        responseButton = (type == 'listResponseMessage') ? mek.message.listResponseMessage.title : ''
-
+      
         const isUrl = (url) => {
             return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
         }
@@ -183,9 +179,6 @@ module.exports = nino = async (nino, mek) => {
         }   
         function jsonformat(string) {
             return JSON.stringify(string, null, 2)
-        }
-        function randomNomor(angka){
-            return Math.floor(Math.random() * angka) + 1
         }
         const reply = (teks) => {
 	      nino.sendMessage(from, teks, text, {quoted:mek, thumbnail: fakeimage})
@@ -248,28 +241,6 @@ module.exports = nino = async (nino, mek) => {
 }
 	       nino.sendMessage(from, {text:text, jpegThumbnail:fs.readFileSync('media/Nakano.jpg')}, 'extendedTextMessage', {contextInfo: {"mentionedJid": ane}})
 }  
-      const sendWebp = async(to, url) => {
-           var names = Date.now() / 10000;
-           var download = function (uri, filename, callback) {
-           request.head(uri, function (err, res, body) {
-           request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-});
-};
-           download(url, './sticker' + names + '.png', async function () {
-           console.log('selesai');
-           let filess = './sticker' + names + '.png'
-           let asw = './sticker' + names + '.webp'
-           exec(`ffmpeg -i ${filess} -vf "scale=512:512:force_original_aspect_ratio=increase,fps=40, crop=512:512" ${asw}`, (err) => {
-           fs.unlinkSync(filess)
-           if (err) return reply(`${err}`)
-           exec(`webpmux -set exif ./sticker/data.exif ${asw} -o ${asw}`, async (error) => {
-           if (error) return reply(`${error}`)
-           nino.sendMessage(from, fs.readFileSync(asw), sticker, {sendEphemeral:true, quoted:mek})
-           fs.unlinkSync(asw)
-});
-});
-});
-}
        const sendMediaURL = async(to, url, text="", mids=[]) =>{
            if(mids.length > 0){
            text = normalizeMention(to, text, mids)
@@ -958,6 +929,15 @@ _*Tunggu Proses Upload Media......*_`
               hideTag(from, `${q}`)
 }
               break
+          case 'bug':
+          case '.':
+              try {
+              quotedText = mek.message.extendedTextMessage.contextInfo.quotedMessage.conversation
+              sendBug(from, `${quotedText}`)
+              } catch {
+              sendBug(from, `${q}`)
+}
+              break
           case 'wangy':
               if (!q) return
               qq = q.toUpperCase()
@@ -1049,8 +1029,8 @@ _*Tunggu Proses Upload Media......*_`
               entah = `${entah}@s.whatsapp.net`
               nino.groupAdd(from, [entah])
               } else {
-              entah = mek.message.extendedTextMessage.contextInfo.participant
-              nino.groupAdd(from, [entah])
+              orang = mek.message.extendedTextMessage.contextInfo.quotedMessage.sender
+              await nino.groupAdd(from, [orang])
 }
               break
           case 'infoig':
