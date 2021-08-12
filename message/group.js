@@ -38,9 +38,9 @@ module.exports = welcome = async (nino, anu) => {
                 anu_user = v.vname || v.notify || num.split('@')[0]
                 teks = `Halo ${anu_user} \n\nNama : \nUmur :\nGender : \nAsal :\n\nSemoga Betah dan jangan lupa isi\nAnd Following Rules Group`
 	            buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/welcome?nama=${anu_user}&descriminator=${memeg}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://i.postimg.cc/rFkw8MpX/IMG-20210807-151325.jpg`)
-                buttons = [{buttonId: ``,buttonText:{displayText: 'Welcome👋'},type:1}]
+                buttons = [{buttonId: `y`,buttonText:{displayText: 'Welcome👋'},type:1}]
                 imageMsg = (await nino.prepareMessageMedia((buff), 'imageMessage', {thumbnail: buff})).imageMessage
-                buttonsMessage = { contentText: `${teks}`, footerText: '', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
+                buttonsMessage = { contentText: `${teks}`, footerText: 'Semoga betah ☕', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
                 prep = await nino.prepareMessageFromContent(mdata.id,{buttonsMessage},{})
                 nino.relayWAMessage(prep)
 }
@@ -53,9 +53,9 @@ module.exports = welcome = async (nino, anu) => {
                 memeg = mdata.participants.length
                 out = `Kenapa tuh? kok bisa keluar? \nSayonara ${anu_user} we will miss you`
                 buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/goodbye?nama=${anu_user}&descriminator=${memeg}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://i.postimg.cc/rFkw8MpX/IMG-20210807-151325.jpg`)
-                buttons = [{buttonId: ``,buttonText:{displayText: 'Sayonara👋'},type:1}]
+                buttons = [{buttonId: `y`,buttonText:{displayText: 'Sayonara👋'},type:1}]
                 imageMsg = (await nino.prepareMessageMedia((buff), 'imageMessage', {thumbnail: buff})).imageMessage
-                buttonsMessage = { contentText: `${out}`, footerText: '', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
+                buttonsMessage = { contentText: `${out}`, footerText: 'Nitip gorengan:v', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
                 prep = await nino.prepareMessageFromContent(mdata.id,{buttonsMessage},{})
                 nino.relayWAMessage(prep)
             }
