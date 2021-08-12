@@ -2,6 +2,7 @@ const {
 	MessageType
 } = require("@adiwajshing/baileys");
 const fs = require("fs-extra")
+const moment = require("moment-timezone")
 
 const { getBuffer } = require('../lib/myfunc')
 const { color, bgcolor } = require('../lib/color')
@@ -36,8 +37,9 @@ module.exports = welcome = async (nino, anu) => {
             	num = anu.participants[0]
                 let v = nino.contacts[num] || { notify: num.replace(/@.+/, '') }
                 anu_user = v.vname || v.notify || num.split('@')[0]
+                time_wel = moment.tz('Asia/Jakarta').format("HH:mm")
                 teks = `Halo ${anu_user} \n\nNama : \nUmur :\nGender : \nAsal :\n\nSemoga Betah dan jangan lupa isi\nAnd Following Rules Group`
-	            buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/welcome?nama=${anu_user}&descriminator=${memeg}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://i.postimg.cc/rFkw8MpX/IMG-20210807-151325.jpg`)
+	            buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/welcome?nama=${anu_user}&descriminator=${time_wel}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://i.postimg.cc/rFkw8MpX/IMG-20210807-151325.jpg`)
                 buttons = [{buttonId: `y`,buttonText:{displayText: 'Welcome👋'},type:1}]
                 imageMsg = (await nino.prepareMessageMedia((buff), 'imageMessage', {thumbnail: buff})).imageMessage
                 buttonsMessage = { contentText: `${teks}`, footerText: 'Semoga betah ☕', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
@@ -50,9 +52,10 @@ module.exports = welcome = async (nino, anu) => {
             	num = anu.participants[0]
                 let w = nino.contacts[num] || { notify: num.replace(/@.+/, '') }
                 anu_user = w.vname || w.notify || num.split('@')[0]
+                time_wel = moment.tz('Asia/Jakarta').format("HH:mm")
                 memeg = mdata.participants.length
                 out = `Kenapa tuh? kok bisa keluar? \nSayonara ${anu_user} we will miss you`
-                buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/goodbye?nama=${anu_user}&descriminator=${memeg}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://i.postimg.cc/rFkw8MpX/IMG-20210807-151325.jpg`)
+                buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/goodbye?nama=${anu_user}&descriminator=${time_wel}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://i.postimg.cc/rFkw8MpX/IMG-20210807-151325.jpg`)
                 buttons = [{buttonId: `y`,buttonText:{displayText: 'Sayonara👋'},type:1}]
                 imageMsg = (await nino.prepareMessageMedia((buff), 'imageMessage', {thumbnail: buff})).imageMessage
                 buttonsMessage = { contentText: `${out}`, footerText: 'Nitip gorengan:v', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
