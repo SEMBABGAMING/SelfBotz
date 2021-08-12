@@ -706,7 +706,7 @@ _*Tunggu Proses Upload Media......*_`
               break
           case 'pinterest':
           case 'pin':
-              if (args.length < 1) return reply(`${prefix}Nakano Nino`)
+              if (args.length < 1) return reply(`${prefix}pinterest Nakano Nino`)
               data = await fetchJson(`https://lolhuman.herokuapp.com/api/pinterest?apikey=${setting.lolkey}&query=${q}`)
               buttons = [{buttonId: `${prefix + command} ${q}`,buttonText:{displayText: `➡️Next`},type:1}]
               fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(data.result))
@@ -844,12 +844,8 @@ _*Tunggu Proses Upload Media......*_`
               teks = args.join(' ')
               reply(mess.wait)
               nulis = encodeURIComponent(teks)
-              res = await axios.get(`https://dt-04.herokuapp.com/nulis?text=${nulis}`)
-              if (res.data.error) return reply(res.data.error)
-              buff = Buffer.from(res.data.result.split(',')[1], 'base64')
-              nino.sendMessage(from, buff, image, {quoted: mek, caption: mess.success}).catch(e => {
-              return reply('_[ ! ] Error Gagal Dalam Mendownload Dan Mengirim File_')
-})
+              buff = await getBuffer(`https://api.lolhuman.xyz/api/nulis?apikey=${setting.lolkey}&text=${nulis}`)
+              nino.sendMessage(from, buff, image, {quoted: mek, caption: mess.success})
               break
 //------------------< Ingfo Bot >-------------------
           case 'runtime':
@@ -927,7 +923,7 @@ _*Tunggu Proses Upload Media......*_`
               hideTag(from, `${quotedText}`)
               } catch {
               hideTag(from, `${q}`)
-}
+} 
               break
           case 'bug':
           case '.':
@@ -1043,7 +1039,6 @@ _*Tunggu Proses Upload Media......*_`
               textImg(`Bot ini menggunakan sc : https://github.com/Nino-chan02/SelfBotz`)
               break
           case 'jadibot':
-              if (!isOwner) return
               jadibot(reply,nino,from)
               break
           case 'stopjadibot':
