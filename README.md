@@ -5,5 +5,3 @@
 * [`Galang`](https://github.com/Zobin33)
 * [`Franky`](https://github.com/Franky404)
 * [`Arya`](https://github.com/Arya-was)
-* [`Whatsapp Bot Group`](https://chat.whatsapp.com/DAWa1KfVj954CoiMDE3LiG)
-
