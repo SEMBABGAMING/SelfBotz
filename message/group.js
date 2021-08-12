@@ -10,7 +10,7 @@ let setting = JSON.parse(fs.readFileSync('./setting.json'))
 prefix = setting.prefix
 
 module.exports = welcome = async (nino, anu) => {
-	    const welkom = JSON.parse(fs.readFileSync('./database/group/welcome.json'))
+	    const welkom = JSON.parse(fs.readFileSync('./database/welcome.json'))
 	    const isWelcome = welkom.includes(anu.jid)
 	    if (!isWelcome) return
 		try {
