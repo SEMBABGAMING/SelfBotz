@@ -58,7 +58,7 @@ module.exports = welcome = async (nino, anu) => {
                 buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/goodbye?nama=${anu_user}&descriminator=${time_wel}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://i.postimg.cc/rFkw8MpX/IMG-20210807-151325.jpg`)
                 buttons = [{buttonId: `y`,buttonText:{displayText: 'Sayonara👋'},type:1}]
                 imageMsg = (await nino.prepareMessageMedia((buff), 'imageMessage', {thumbnail: buff})).imageMessage
-                buttonsMessage = { contentText: `${out}`, footerText: 'Nitip gorengan:v', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
+                buttonsMessage = { contentText: `${out}`, footerText: 'Nitip gorengan ya', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
                 prep = await nino.prepareMessageFromContent(mdata.id,{buttonsMessage},{})
                 nino.relayWAMessage(prep)
             }
