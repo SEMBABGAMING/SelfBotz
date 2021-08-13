@@ -1,5 +1,10 @@
-// Mau recode? ya terserah asal jangan ganti WaterMark
-// SC nya jangan dijual
+/* 
+
+Sourcecode https://github.com/Nino-chan02/SelfBotz
+
+Mau recode? ya terserah asal jangan ganti WaterMark
+SC nya jangan dijual
+*/
 const {
     WAConnection,
 	MessageType,
