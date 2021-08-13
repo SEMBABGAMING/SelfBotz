@@ -4,7 +4,13 @@ const {
     WAConnection,
 	MessageType,
 	Presence,
+	MessageOptions,
 	Mimetype,
+	WALocationMessage,
+	WA_MESSAGE_STUB_TYPES,
+	WA_DEFAULT_EPHEMERAL,
+	ReconnectMode,
+	ProxyAgent,
 	ChatModification,
 	GroupSettingChange,
 	waChatKey,
@@ -703,7 +709,7 @@ _*Tunggu Proses Upload Media......*_`
           case 'pinterest':
           case 'pin':
               if (args.length < 1) return reply(`${prefix}pinterest Nakano Nino`)
-              data = await fetchJson(`https://lolhuman.herokuapp.com/api/pinterest?apikey=${setting.lolkey}&query=${q}`)
+              data = await fetchJson(`https://api.lolhuman.xyz/api/pinterest?apikey=${setting.lolkey}&query=${q}`)
               buttons = [{buttonId: `${prefix + command} ${q}`,buttonText:{displayText: `➡️Next`},type:1}]
               fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(data.result))
               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'imageMessage', {thumbnail: Buffer.alloc(0)})).message.imageMessage
@@ -984,8 +990,8 @@ _*Tunggu Proses Upload Media......*_`
           case 'lolkey':
           case 'cekapikey':
               if (args.length < 1) return reply(`Ketik ${prefix}lolkey [Apikeynya]`) 
-              anu = await fetchJson(`https://lolhuman.herokuapp.com/api/checkapikey?apikey=${q}`)
-              teks = `*YOUR APIKEY*\n\n➸ Ussername= ${anu.result.username}\n➸ Request= ${anu.result.requests}\n➸ Today= ${anu.result.today}\n➸ Akun Type= ${anu.result.account_type}\n➸ Expired= ${anu.result.expired}\n➸ API = https://lolhuman.herokuapp.com`
+              data = await fetchJson(`https://api.lolhuman.xyz/api/checkapikey?apikey=${q}`)
+              teks = `*YOUR APIKEY*\n\n➸ Ussername= ${data.result.username}\n➸ Request= ${data.result.requests}\n➸ Today= ${data.result.today}\n➸ Akun Type= ${data.result.account_type}\n➸ Expired= ${data.result.expired}\n➸ API = https://api.lolhuman.xyz`
               nino.sendMessage(from, teks, text, {quoted: mek})
               break
           case 'welcome':
