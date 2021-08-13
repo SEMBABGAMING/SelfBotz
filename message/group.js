@@ -28,7 +28,7 @@ module.exports = welcome = async (nino, anu) => {
                 pp_grup = 'https://i.postimg.cc/SN54m6LW/SAVE-20210728-133334.jpg'
             }
             if (anu.action == 'add' && mem.includes(nino.user.jid)) {
-            nino.sendMessage(anu.jid, 'Halo! Terima Kasih sudah Mengundangku, Jika ingin Menggunakan Bot Ketik !menu', 'conversation')
+            nino.sendMessage(anu.jid, 'Halo! Terima Kasih sudah Mengundangku, Jika ingin Menggunakan Bot Ketik ${prefix}menu', 'conversation')
             }
              if (anu.action == 'add' && !mem.includes(nino.user.jid)) {
              if (!welkom.includes(anu.jid)) return
