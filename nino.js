@@ -1,20 +1,16 @@
+// Mau recode? ya terserah asal jangan ganti WaterMark
+// SC nya jangan dijual
 const {
     WAConnection,
 	MessageType,
 	Presence,
-	MessageOptions,
 	Mimetype,
-	WALocationMessage,
-	WA_MESSAGE_STUB_TYPES,
-	WA_DEFAULT_EPHEMERAL,
-	ReconnectMode,
-	ProxyAgent,
 	ChatModification,
 	GroupSettingChange,
 	waChatKey,
 	mentionedJid,
 	processTime,
-	Browsers,
+	Browsers
 } = require("@adiwajshing/baileys")
 const moment = require("moment-timezone");
 moment.tz.setDefault("Asia/Jakarta").locale("id");
