@@ -177,7 +177,13 @@ module.exports = nino = async (nino, mek) => {
         const isOwner = ownerNumber.includes(sender)
         const isWelkom = isGroup ? welkom.includes(from) : false
         
-      
+        if (isGroup && type == 'viewOnceMessage'){
+                var msg = {...message}
+                mek.message = mek.message.viewOnceMessage.message
+                mek.message[Object.keys(mek.message)[0]].viewOnce = false
+                reply('ViewOnce detected!')
+                nino.forwardMessage(from, msg)
+        }
         const isUrl = (url) => {
             return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
         }
@@ -535,6 +541,7 @@ ${repo.open_issues} Issue${repo.description ? `
 }
               break
           case 'youtubedl':
+          case 'ytdl':
               if (args.length < 1) return reply('Link Nya Mana?')
               if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
               teks = args.join(' ')
@@ -899,6 +906,25 @@ _*Tunggu Proses Upload Media......*_`
               reply(`Bye...`)
               await sleep(3000)
               process.exit()
+              break
+          case 'bc':
+          case 'broadcast':
+              if (!isOwner) return  reply(mess.only.owner)
+              if (args.length < 1) return reply('teksnya?')
+              anu = await nino.chats.all()
+              if (isMedia && !mek.message.videoMessage || isQuotedImage) {
+              encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
+              bc = await nino.downloadMediaMessage(encmedia)
+              for (let _ of anu) {
+              nino.sendMessage(_.jid, bc, image, {quoted:freply,caption: `*「 Nino Broadcast 」*\n\n${body.slice(4)}`})
+}
+              reply('Sukses')
+              } else {
+              for (let _ of anu) {
+              sendMess(_.jid, `*「 Nino Broadcast 」*\n\n${body.slice(4)}`)
+}
+              reply('Sukses')
+}
               break
           case 'leaveall':
               if (!isOwner) return  
