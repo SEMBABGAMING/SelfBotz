@@ -177,13 +177,6 @@ module.exports = nino = async (nino, mek) => {
         const isOwner = ownerNumber.includes(sender)
         const isWelkom = isGroup ? welkom.includes(from) : false
         
-        if (isGroup && type == 'viewOnceMessage'){
-                var msg= {...message}
-                msg.message = mek.message.viewOnceMessage.message
-                msg.message[Object.keys(mek.message)[0]].viewOnce = false
-                reply('ViewOnce detected!')
-                nino.forwardMessage(from, msg)
-        }
         const isUrl = (url) => {
             return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
         }
