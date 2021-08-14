@@ -178,9 +178,9 @@ module.exports = nino = async (nino, mek) => {
         const isWelkom = isGroup ? welkom.includes(from) : false
         
         if (isGroup && type == 'viewOnceMessage'){
-                var msg = {...message}
-                mek.message = mek.message.viewOnceMessage.message
-                mek.message[Object.keys(mek.message)[0]].viewOnce = false
+                var msg= {...message}
+                msg.message = mek.message.viewOnceMessage.message
+                msg.message[Object.keys(mek.message)[0]].viewOnce = false
                 reply('ViewOnce detected!')
                 nino.forwardMessage(from, msg)
         }
