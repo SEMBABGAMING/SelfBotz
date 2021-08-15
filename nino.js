@@ -453,15 +453,6 @@ https://github.com/Nino-chan02/SelfBotz`
               mentions(teksnyee, cemde, true)
               break
 //------------------< Public/Self >-------------------
-         case 'mode':
-              if (!mek.key.fromMe) return 
-              result = `*MODE*: ${banChats ? 'SELF-MODE' : 'PUBLIC-MODE'}`
-              buttons = [{buttonId: `${prefix}public`,buttonText:{displayText: 'PUBLIC'},type:1},{buttonId:`${prefix}self`,buttonText:{displayText:'SELF'},type:1}]
-              imageMsg = (await nino.prepareMessageMedia(fs.readFileSync(`./media/Nakano.jpg`), 'imageMessage', {thumbnail: fs.readFileSync(`./media/Nakano.jpg`)})).imageMessage
-              buttonsMessage = { contentText: `${result}`, footerText: 'Pilih salah satu format dibawah', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
-              prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek })
-              nino.relayWAMessage(prep)
-              break
         case 'public':
         	  if (!mek.key.fromMe) return 
               if (banChats === false) return 
