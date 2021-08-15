@@ -60,7 +60,7 @@ const { y2mateA, y2mateV } = require('./lib/y2mate')
 const { jadibot, stopjadibot, listjadibot } = require('./lib/jadibot')
 const truth = JSON.parse(fs.readFileSync('./database/truth.json'))
 const dare = JSON.parse(fs.readFileSync('./database/dare.json'))
-const a = '```'
+const ff = '```'
 
 hit_today = []
 banChats = true
@@ -453,6 +453,15 @@ https://github.com/Nino-chan02/SelfBotz`
               mentions(teksnyee, cemde, true)
               break
 //------------------< Public/Self >-------------------
+         case 'mode':
+              if (!mek.key.fromMe) return 
+              result = `*MODE*: ${banChats ? 'SELF-MODE' : 'PUBLIC-MODE'}`
+              buttons = [{buttonId: `${prefix}public`,buttonText:{displayText: 'PUBLIC'},type:1},{buttonId:`${prefix}self`,buttonText:{displayText:'SELF'},type:1}]
+              imageMsg = (await nino.prepareMessageMedia(fs.readFileSync(`./media/Nakano.jpg`), 'imageMessage', {thumbnail: fs.readFileSync(`./media/Nakano.jpg`)})).imageMessage
+              buttonsMessage = { contentText: `${result}`, footerText: 'Pilih salah satu format dibawah', imageMessage: imageMsg, buttons: buttons, headerType: 4 }
+              prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek })
+              nino.relayWAMessage(prep)
+              break
         case 'public':
         	  if (!mek.key.fromMe) return 
               if (banChats === false) return 
@@ -556,6 +565,7 @@ ${repo.open_issues} Issue${repo.description ? `
               fs.unlinkSync(`./ytmp.jpeg`)
               break
           case 'tiktokdl':
+          case 'tiktok':
               if (!q) return reply('Linknya?')
               if (!q.includes('tiktok')) return reply(mess.error.Iv)
               data = await fetchJson(`https://api.lolhuman.xyz/api/tiktok?apikey=${setting.lolkey}&url=${q}`)
@@ -1104,14 +1114,14 @@ if (budy.startsWith('=>')){
 if (!isOwner) return
 try {
 return nino.sendMessage(from, 
-`${a}📥 Input: ${budy.slice(3)}
+`${ff}📥 Input: ${budy.slice(3)}
 📤 OutPut: 
 ${JSON.stringify(eval(budy.slice(2)),null,'\t')}
-${a}`
+${ff}`
 ,text, {quoted:mek })
 } catch(err) {
 e = String(err)
-reply(`${a} "err" :  "${e}"${a}`)
+reply(`${ff} "err" :  "${e}"${ff}`)
 }
 }
 if (!isOwner) return
