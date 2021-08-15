@@ -60,7 +60,7 @@ const { y2mateA, y2mateV } = require('./lib/y2mate')
 const { jadibot, stopjadibot, listjadibot } = require('./lib/jadibot')
 const truth = JSON.parse(fs.readFileSync('./database/truth.json'))
 const dare = JSON.parse(fs.readFileSync('./database/dare.json'))
-const ff = '```'
+const pantekk = '```'
 
 hit_today = []
 banChats = true
@@ -640,7 +640,7 @@ ${repo.open_issues} Issue${repo.description ? `
               break
           case 'google':
               if (!q) return reply(mess.wrongFormat)
-              ss = await getBuffer(`https://api.apiflash.com/v1/urltoimage?access_key=f3fce33fa6804c0b97c897b3bd2ec7a8&url=https://google.com/search?q=${q}`)
+              ss = await getBuffer(`https://api.apiflash.com/v1/urltoimage?access_key=f307ca1dc9824ae89caa976435c03178&url=http://www.google.com/search?q=${q}&oq={q}&aqs=chrome..69i57j0i433i512l2j0i512l2.858j0j4&client=ms-android-oppo&sourceid=chrome-mobile&ie=UTF-8`)
               if(q == undefined || q == ' ') return reply(`*Hasil Pencarian : ${q}* tidak ditemukan`)
               googleIt({ 'query': q }).then(results => {
               vars = `_*Hasil Pencarian : ${q}*_\n`
@@ -1114,14 +1114,14 @@ if (budy.startsWith('=>')){
 if (!isOwner) return
 try {
 return nino.sendMessage(from, 
-`${ff}📥 Input: ${budy.slice(3)}
+`${pantekk}📥 Input: ${budy.slice(3)}
 📤 OutPut: 
 ${JSON.stringify(eval(budy.slice(2)),null,'\t')}
-${ff}`
+${pantekk}`
 ,text, {quoted:mek })
 } catch(err) {
 e = String(err)
-reply(`${ff} "err" :  "${e}"${ff}`)
+reply(`${pantekk} "err" :  "${e}"${pantekk}`)
 }
 }
 if (!isOwner) return
