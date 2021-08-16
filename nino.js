@@ -843,7 +843,6 @@ _*Tunggu Proses Upload Media......*_`
           case 'tulis':
               if (args.length < 1) return reply('Yang mau di tulis apaan?')
               teks = args.join(' ')
-              reply(mess.wait)
               nulis = encodeURIComponent(teks)
               buff = await getBuffer(`https://api.lolhuman.xyz/api/nulis?apikey=${setting.lolkey}&text=${nulis}`)
               nino.sendMessage(from, buff, image, {quoted: mek, caption: mess.success})
@@ -1059,6 +1058,7 @@ _*Tunggu Proses Upload Media......*_`
               textImg(`Bot ini menggunakan sc : https://github.com/Nino-chan02/SelfBotz`)
               break
           case 'jadibot':
+              if (!isOwner) return  reply(mess.only.owner)
               jadibot(reply,nino,from)
               break
           case 'stopjadibot':
