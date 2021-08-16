@@ -22,11 +22,12 @@
 | **CEK DISINI** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L360) |
 | :---------------------------------------------: | :-----------: |
 
-## New Update
+## <IMG src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Point_Down.gif" width="29px"> New Update
+| NAMA FITUR | CEK DISINI |
 |--------|--------|
-|**FITUR GAME**| |
-|**ADD SEWA**| |
-| :---------------------------------------------: | :-----------: |
+| **FITUR GAME** |[HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L473) |
+| **SEWA BOT EXPIRED** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L540) |
+
 
 ## Edit file
 - Change ownerNumber on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L3)
@@ -38,6 +39,7 @@
 ## Thanks To
 * [`Baileys`](https://github.com/adiwajshing/Baileys)
 * [`Arip`](https://github.com/Akkun3704)
+* [`Aqulz`](https://github.com/zennn08)
 * [`Hexa`](https://github.com/Hexagonz)
 * [`Galang`](https://github.com/Zobin33)
 * [`Franky`](https://github.com/Franky404)
