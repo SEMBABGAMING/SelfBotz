@@ -679,7 +679,7 @@ _*Tunggu Proses Upload Media......*_`
               break
           case 'ytdesc':
               if (args.length < 1) return reply('Video/Link Yt Nya Mana? ')
-              teks = args.join(' ')
+              teks = encodeURIComponent(q)
               res = await yts(teks)
               reply(res.all[0].description)
               break
