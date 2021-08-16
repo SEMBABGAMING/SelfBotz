@@ -22,6 +22,10 @@
 | **CEK DISINI** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L360) |
 | :---------------------------------------------: | :-----------: |
 
+## New Update
+|**FITUR GAME**|
+|**ADD SEWA**|
+| :---------------------------------------------: | :-----------: |
 
 ## Edit file
 - Change ownerNumber on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L3)
