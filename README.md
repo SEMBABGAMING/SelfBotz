@@ -19,15 +19,15 @@
 | **IMAGEMAGICK** | [HERE](https://github.com/DuckyTeam/heroku-buildpack-imagemagick) |
 
 ## Features
-| **CEK DISINI** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L379) |
+| **CEK DISINI** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L378) |
 | :---------------------------------------------: | :-----------: |
 
 
 ## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Point_Down.gif" width="29px"> New Update
 | NAMA FITUR | CEK DISINI |
 |--------|--------|
-| **FITUR GAME** |[HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L473) |
-| **SEWA BOT EXPIRED** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L540) |
+| **FITUR GAME** |[HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L472) |
+| **SEWA BOT EXPIRED** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L539) |
 
 
 ## Edit file
