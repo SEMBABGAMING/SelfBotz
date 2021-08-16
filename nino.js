@@ -153,7 +153,6 @@ module.exports = nino = async (nino, mek) => {
         const botNumber = nino.user.jid
         const ownerNumber = setting.ownerNumber
 		const ownerName = setting.ownerName
-		const botName = setting.botName
 		const isGroup = from.endsWith('@g.us')
 		const sender = mek.key.fromMe ? nino.user.jid : mek.key.remoteJid.endsWith('@g.us') ? mek.participant : mek.key.remoteJid
 		const totalchat = await nino.chats.all()
