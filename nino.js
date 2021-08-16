@@ -41,7 +41,6 @@ const { promisify, util } = require('util')
 const qrcodes = require('qrcode');
 const googleIt = require('google-it')
 const os = require('os');
-const hx = require('hxz-api')
 
 // stickwm
 const Exif = require('./lib/exif');
@@ -51,30 +50,37 @@ const { getBuffer, getGroupAdmins, getRandom, runtime, pickRandom, clockString, 
 const { fetchJson, getBase64, kyun, createExif } = require('./lib/fetch')
 const { color, bgcolor } = require('./lib/color')
 const { mess } = require('./message/mess')
-const { Toxic } = require('./lib/Toxic.js')
+const _sewa = require("./lib/sewa");
+const game = require("./lib/game");
 const { cmdadd } = require('./lib/totalcmd.js')
 const { uptotele, uploadFile, RESTfulAPI, uploadImages } = require('./lib/uploadimage')
 const { mediafireDl } = require('./lib/mediafire.js')
 const { webp2gifFile, igDownloader, TiktokDownloader } = require("./lib/gif.js")
 const { y2mateA, y2mateV } = require('./lib/y2mate')
-const { jadibot, stopjadibot, listjadibot } = require('./lib/jadibot')
 const truth = JSON.parse(fs.readFileSync('./database/truth.json'))
 const dare = JSON.parse(fs.readFileSync('./database/dare.json'))
 const pantekk = '```'
 
+ky_ttt = []
+tttawal= ["0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"]
 hit_today = []
 banChats = true
 
 let fakeimage = fs.readFileSync("./media/wpmobile.png")
 let setting = JSON.parse(fs.readFileSync('./setting.json'))
 
+// Game
+let family100 = [];
+let tebakgambar = [];
+
+const { owner, gamewaktu } = setting
+
 prefix = setting.prefix
-owner = setting.owner
 
 // Database
 let welkom = JSON.parse(fs.readFileSync('./database/welcome.json'))
 let _scommand = JSON.parse(fs.readFileSync('./database/scommand.json'))
-
+let sewa = JSON.parse(fs.readFileSync('./database/sewa.json'));
 
 // Sticker Cmd
 const addCmd = (id, command) => {
@@ -173,8 +179,23 @@ module.exports = nino = async (nino, mek) => {
         mention != undefined ? mention.push(mentionByreply) : []
         const mentionUser = mention != undefined ? mention.filter(n => n) : []
 		
+		idttt = []
+	    players1 = []
+	    players2 = []
+	    gilir = []
+	    for (let t of ky_ttt){
+	    idttt.push(t.id)
+	    players1.push(t.player1)
+	    players2.push(t.player2)
+	    gilir.push(t.gilir)
+}
+	    const isTTT = isGroup ? idttt.includes(from) : false
+	    isPlayer1 = isGroup ? players1.includes(sender) : false
+        isPlayer2 = isGroup ? players2.includes(sender) : false
+		
         const isOwner = ownerNumber.includes(sender)
         const isWelkom = isGroup ? welkom.includes(from) : false
+        const isSewa = _sewa.checkSewaGroup(from, sewa)
         
         const isUrl = (url) => {
             return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
@@ -200,6 +221,11 @@ module.exports = nino = async (nino, mek) => {
         const textImg = (teks) => {
            return nino.sendMessage(from, teks, text, {quoted: mek, thumbnail: fs.readFileSync('./media/wpmobile.png')})
         }
+        const print = function (teks) {
+           if (typeof teks !== 'string') teks = require('util').inspect(teks)
+           teks = require('util').format(teks)
+           return textImg(teks)
+        }
         const freply = { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: '16504228206@s.whatsapp.net' } : {}) }, message: { "contactMessage": { "displayName": `${pushname}`, "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:XL;${pushname},;;;\nFN:${pushname},\nitem1.TEL;waid=${sender.split('@')[0]}:${sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, "jpegThumbnail":fs.readFileSync('./media/Nakano.jpg')
         }}}
        const math = (teks) => {
@@ -210,18 +236,6 @@ module.exports = nino = async (nino, mek) => {
 	       nino.groupRemove(from, [i])
         }
         }
-       const kickMember = async(id, target = []) => {
-           let group = await nino.groupMetadata(id)
-           let owner = group.owner.replace("c.us", "s.whatsapp.net")
-           let me = nino.user.jid
-           for (i of target) {
-           if (!i.includes(me) && !i.includes(owner)) {
-           await nino.groupRemove(from, [i])
-        } else {
-           await nino.sendMessage(id, "Not Premited!", "conversation")
-        }
-    }
-}
        const add = function(from, orangnya){
 	       nino.groupAdd(from, orangnya)
 }
@@ -288,43 +302,10 @@ module.exports = nino = async (nino, mek) => {
 })
 })
 }
-          let authorname = nino.contacts[from] != undefined ? nino.contacts[from].vname || nino.contacts[from].notify : undefined	
-          if (authorname != undefined) { } else { authorname = groupName }	
-          function addMetadata(packname, author) {	
-          if (!packname) packname = 'WABot'; if (!author) author = 'Bot';author = author.replace(/[^a-zA-Z0-9]/g, '');	
-          let name = `${author}_${packname}`
-          if (fs.existsSync(`./sticker/${name}.exif`)) return `./sticker/${name}.exif`
-          const json = {	
-         "sticker-pack-name": packname,
-         "sticker-pack-publisher": author,
-}
-         const littleEndian = Buffer.from([0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x41, 0x57, 0x07, 0x00])	
-         const bytes = [0x00, 0x00, 0x16, 0x00, 0x00, 0x00]	
-         let len = JSON.stringify(json).length	
-         let last	
-         if (len > 256) {	
-         len = len - 256	
-         bytes.unshift(0x01)	
-         } else {	
-         bytes.unshift(0x00)	
-}	
-         if (len < 16) {	
-         last = len.toString(16)	
-         last = "0" + len	
-         } else {	
-         last = len.toString(16)	
-}	
-       const buf2 = Buffer.from(last, "hex")	
-	   const buf3 = Buffer.from(bytes)	
-	   const buf4 = Buffer.from(JSON.stringify(json))	
-	   const buffer = Buffer.concat([littleEndian, buf2, buf3, buf4])	
-	   fs.writeFile(`./sticker/${name}.exif`, buffer, (err) => {	
-	   return `./sticker/${name}.exif`	
-})	
-}
-       function formatDate(n, locale = 'id') {
-       let d = new Date(n)
-       return d.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
+          
+        function formatDate(n, locale = 'id') {
+        let d = new Date(n)
+        return d.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     })
     }
        
@@ -335,7 +316,46 @@ module.exports = nino = async (nino, mek) => {
 		const isQuotedAudio = type === 'extendedTextMessage' && content.includes('audioMessage')
 		const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
 
-      
+      // Sewa
+        _sewa.expiredCheck(nino, sewa)
+        
+      // GAME 
+        const getWin = (userId) => {
+              let position = false
+              Object.keys(_win).forEach((i) => {
+              if (_win[i].jid === userId) {
+              position = i
+       }
+        })
+              if (position !== false) {
+              return _win[position].win
+            }
+        }
+             // Game
+              game.cekWaktuFam(nino, family100)
+              game.cekWaktuTG(nino, tebakgambar)
+              
+              if (game.isTebakGambar(from, tebakgambar)) {
+              if (budy.toLowerCase().includes(game.getJawabanTG(from, tebakgambar))){
+                await reply(`*Selamat jawaban kamu benar*\n*Jawaban :* ${game.getJawabanTG(from, tebakgambar)}\n\nIngin bermain lagi? kirim *${prefix}tebakgambar*`)
+                tebakgambar.splice(game.getTGPosi(from, tebakgambar), 1)
+            }
+        }
+              if (game.isfam(from, family100)) {
+               var anjuy = game.getjawaban100(from, family100)
+               for (let i of anjuy){
+                if (budy.toLowerCase().includes(i)){
+                    await reply(`*Jawaban benar*\n*Jawaban :* ${i}\n*Jawaban yang blum tertebak :* ${anjuy.length - 1}`)
+                    var anug = anjuy.indexOf(i)
+                    anjuy.splice(anug, 1)
+                }
+            }
+            if (anjuy.length < 1){
+                nino.sendMessage(from, `Semua jawaban sudah tertebak\nKirim *${prefix}family100* untuk bermain lagi`, text)
+                family100.splice(game.getfamposi(from, family100), 1)
+            }
+       }
+              
          // CMD
         if (isCmd && !isGroup)
             console.log(color('[ CMD ]'), color(time, 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname))
@@ -343,7 +363,7 @@ module.exports = nino = async (nino, mek) => {
         if (isCmd && isGroup)
             console.log(color('[ CMD ]'), color(time, 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname), 'in', color(groupName))
             
-            if (!mek.key.fromMe && banChats === true) return
+            if (!isOwner && banChats === true) return
             switch(command){
            
            case 'owner':
@@ -365,7 +385,6 @@ module.exports = nino = async (nino, mek) => {
 
 *TOOLs*
 • ${prefix}attp
-• ${prefix}exif
 • ${prefix}nulis
 • ${prefix}sticker
 • ${prefix}toimg
@@ -377,7 +396,6 @@ module.exports = nino = async (nino, mek) => {
 • ${prefix}nhdl
 • ${prefix}play
 • ${prefix}igdl
-• ${prefix}igstory
 • ${prefix}tiktokdl
 • ${prefix}mediafire
 • ${prefix}facebook
@@ -395,11 +413,6 @@ module.exports = nino = async (nino, mek) => {
 • ${prefix}pinterest
 • ${prefix}ghsearch
 
-*SESSION*
-• ${prefix}jadibot
-• ${prefix}stopjadibot
-• ${prefix}listjadibot
-
 *IMAGE*
 • ${prefix}waifu
 • ${prefix}loli
@@ -413,10 +426,17 @@ module.exports = nino = async (nino, mek) => {
 • ${prefix}kick
 • ${prefix}add
 • ${prefix}culik
-• ${prefix}kickall
-• ${prefix}leaveall
 • ${prefix}hidetag
+• ${prefix}listsewa
+• ${prefix}ceksewa
 • ${prefix}welcome
+• ${prefix}sewa add/del
+
+*GAME*
+• ${prefix}tod
+• ${prefix}tictactoe
+• ${prefix}family100
+• ${prefix}tebakgambar
 
 *Source Code:*
 https://github.com/Nino-chan02/SelfBotz`
@@ -442,27 +462,113 @@ https://github.com/Nino-chan02/SelfBotz`
               textImg("Done!")
               break
        case 'listcmd':
-              let teksnyee = `\`\`\`「 LIST STICKER CMD 」\`\`\``
-              let cemde = [];
+              teksnyee = `\`\`\`「 LIST STICKER CMD 」\`\`\``
+              cemde = [];
               for (let i of _scommand) {
               cemde.push(i.id)
               teksnyee += `\n\n➸ *ID :* ${i.id}\n➸ *Cmd* : ${i.chats}`
 }
               mentions(teksnyee, cemde, true)
               break
+//------------------< Game >-------------------
+        case 'tictactoe':
+        case 'ttt':
+              if (!isGroup) return reply(mess.only.group)
+              if (args.length < 1) return reply('Tag Lawan Anda! ')
+              if (isTTT) return reply('Sedang Ada Permainan Di Grub Ini, Harap Tunggu')
+              if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target Lawan!')
+              ment = mek.message.extendedTextMessage.contextInfo.mentionedJid
+              player1 = sender
+              player2 = ment[0]
+              angka = ["0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"]
+              id = from
+              gilir = player2
+              ky_ttt.push({player1,player2,id,angka,gilir})
+              nino.sendMessage(from, 
+`*🎳 Memulai Game Tictactoe 🎲*
+
+[@${player2.split('@')[0]}] Menantang anda untuk menjadi lawan Game🔥
+Ketik Y/N untuk menerima atau menolak permainan
+
+Ket : Ketik ${prefix}resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {contextInfo: {mentionedJid: [player2]}})
+              break
+        case 'delsesittt':
+        case 'resetgame':
+              if (!isGroup) return reply(mess.only.group)
+              if (!isTTT) return reply('Tidak Ada Permainan Di Grup Ini')
+              naa = ky_ttt.filter(toek => !toek.id.includes(from)) 
+              ky_ttt = naa 
+              reply('Sukses Mereset Game')
+              break
+        case 'family100':
+              if (game.isfam(from, family100)) return reply(`Masih ada soal yang belum di selesaikan`)
+              anu = await axios.get(`http://api.lolhuman.xyz/api/tebak/family100?apikey=${setting.lolkey}`)
+              reply(`*JAWABLAH SOAL BERIKUT*\n\n*Soal :* ${anu.data.result.question}\n*Total Jawaban :* ${anu.data.result.aswer.length}\n\nWaktu : ${gamewaktu}s`)
+              anoh = anu.data.result.aswer
+              rgfds = []
+              for (let i of anoh){
+              fefs = i.split('/') ? i.split('/')[0] : i
+              iuhbb = fefs.startsWith(' ') ? fefs.replace(' ','') : fefs
+              axsf = iuhbb.endsWith(' ') ? iuhbb.replace(iuhbb.slice(-1), '') : iuhbb
+              rgfds.push(axsf.toLowerCase())
+}
+              game.addfam(from, rgfds, gamewaktu, family100)
+              break
+          case 'tebakgambar':
+              if (game.isTebakGambar(from, tebakgambar)) return reply(`Masih ada soal yang belum di selesaikan`)
+              anu = await axios.get(`http://api.lolhuman.xyz/api/tebak/gambar?apikey=${setting.lolkey}`)
+              petunjuk = anu.data.result.answer.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
+              ini_buffer = await getBuffer(anu.data.result.image)
+              nino.sendMessage(from, ini_buffer, image, { quoted: mek, caption: `Silahkan jawab soal berikut ini\n\nPetunjuk : ${petunjuk}\nWaktu : ${gamewaktu}s`})
+              anih = anu.data.result.answer.toLowerCase()
+              game.addgambar(from, anih, gamewaktu, tebakgambar)
+              break
 //------------------< Public/Self >-------------------
         case 'public':
-        	  if (!mek.key.fromMe) return 
+        	  if (!isOwner) return 
               if (banChats === false) return 
               banChats = false
               textImg(`Success Activated Mode Public`)
               break
 	      case 'self':
-              if (!mek.key.fromMe) return 
+              if (!isOwner) return 
               if (banChats === true) return
         	  uptime = process.uptime()
         	  banChats = true
               textImg(`Success Activated Mode Self`)
+              break
+//------------------< Sewa >-------------------
+          case 'sewa':
+              if (!isGroup)return reply(mess.only.group)
+              if (!isOwner) return reply(mess.only.owner)
+              if (args.length < 1) return reply(`Example: *${prefix}sewa* add/del waktu`)
+              if (args[0].toLowerCase() === 'add'){
+            _sewa.addSewaGroup(from, args[1], sewa)
+              reply(`Berhasil Menyewa Bot Di Group Ini\nSilahkan ketik ${prefix}ceksewa`)
+              } else if (args[0].toLowerCase() === 'del'){
+              sewa.splice(_sewa.getSewaPosition(from, sewa), 1)
+              fs.writeFileSync('./database/sewa.json', JSON.stringify(sewa))
+              reply('Oke Selesai ~')
+              } else {
+              reply(`Example: *${prefix}sewa* add/del waktu`)
+}
+              break
+       case 'sewalist': 
+       case 'listsewa':
+              txtnyee = `List Sewa\nJumlah : ${sewa.length}\n\n`
+              for (let i of sewa){
+              cekvipp = ms(i.expired - Date.now())
+              txtnyee += `*ID :* ${i.id} \n*Expire :* ${cekvipp.days} day(s) ${cekvipp.hours} hour(s) ${cekvipp.minutes} minute(s) ${cekvipp.seconds} second(s)\n\n`
+}
+              reply(txtnyee)
+              break
+       case 'sewacheck':
+       case 'ceksewa': 
+              if (!isGroup) return reply(mess.only.group)
+              if (!isSewa) return reply(`Group ini tidak terdaftar dalam list sewabot.`)
+              cekvip = ms(_sewa.getSewaExpired(from, sewa) - Date.now())
+              premiumnya = `*「 SEWA EXPIRE 」*\n\n➸ *ID*: ${from}\n➸ *Expired :* ${cekvip.days} day(s) ${cekvip.hours} hour(s) ${cekvip.minutes} minute(s)`
+              reply(premiumnya)
               break
 //------------------< Downloader/Search/Anime >-------------------
           case 'igdl':
@@ -478,21 +584,6 @@ https://github.com/Nino-chan02/SelfBotz`
               console.log(e)
               reply(String(e))
 }
-              break
-          case 'igstory': 
-              if(!q) return reply('Usernamenya?')
-              hx.igstory(q)
-             .then(async result => {
-              for(let i of result.medias){
-              if(i.url.includes('mp4')){
-              let link = await getBuffer(i.url)
-              nino.sendMessage(from,link,video,{quoted: mek,caption: `Type : ${i.type}`})
-              } else {
-              let link = await getBuffer(i.url)
-              nino.sendMessage(from,link,image,{quoted: mek,caption: `Type : ${i.type}`})                  
-}
-}
-});
               break
           case 'ghsearch': 
           case 'githubsearch': 
@@ -760,40 +851,58 @@ _*Tunggu Proses Upload Media......*_`
               buffer = await getBuffer(`https://api.xteam.xyz/attp?file&text=${encodeURI(q)}`)
               nino.sendMessage(from, buffer, sticker, { quoted: mek })
               break
-          case 'sticker':
-          case 'stiker':
           case 's':
-          case 'stickergif':
-          case 'stikergif':
-          case 'sgif':
+          case 'sticker':
+	      case 'stiker':
               if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
-              encmediat = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-              mediat = await nino.downloadAndSaveMediaMessage(encmediat)
-              ron = getRandom('.webp')
-              exec(`ffmpeg -i ${mediat} -vf "scale=512:512:force_original_aspect_ratio=increase,fps=15, crop=512:512" ${ron}`, (err) => {
-              fs.unlinkSync(mediat)
-              if (err) return reply(`${err}`)
-              exec(`webpmux -set exif ${addMetadata('Ninochan')} ${ron} -o ${ron}`, async (error) => {
-              if (error) return reply(`${error}`)
-              nino.sendMessage(from, fs.readFileSync(ron), sticker, {quoted:mek})
-              fs.unlinkSync(ron)
+              encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
+              media = await nino.downloadAndSaveMediaMessage(encmedia)
+              ran = getRandom('.webp')
+              await ffmpeg(`./${media}`)
+             .input(media)
+             .on('start', function (cmd) {
+              console.log(`Started : ${cmd}`)
 })
+             .on('error', function (err) {
+              console.log(`Error : ${err}`)
+              fs.unlinkSync(media)
+              reply('Eror!')
 })
-              } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
+             .on('end', function () {
+              console.log('Finish')
+              nino.sendMessage(from, fs.readFileSync(ran), sticker, { quoted : mek}) 
+              fs.unlinkSync(media)
+              fs.unlinkSync(ran)
+})
+             .addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+             .toFormat('webp')
+             .save(ran)
+          } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
               encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-              mediat = await nino.downloadAndSaveMediaMessage(encmedia)
-              ron = getRandom('.webp')
-              exec(`ffmpeg -i ${mediat} -vf "scale=512:512:force_original_aspect_ratio=increase,fps=15, crop=512:512" ${ron}`, (err) => {
-              fs.unlinkSync(mediat)
-              if (err) return reply(`${err}`)
-              exec(`webpmux -set exif ${addMetadata('Ninochan')} ${ron} -o ${ron}`, async (error) => {
-              if (error) return reply(`${error}`)
-              nino.sendMessage(from, fs.readFileSync(ron), sticker, {quoted:mek})
-              fs.unlinkSync(ron)
+              media = await nino.downloadAndSaveMediaMessage(encmedia)
+              ran = getRandom('.webp')
+              await ffmpeg(`./${media}`)
+             .inputFormat(media.split('.')[1])
+             .on('start', function (cmd) {
+              console.log(`Started : ${cmd}`)
 })
+             .on('error', function (err) {
+              console.log(`Error : ${err}`)
+              fs.unlinkSync(media)
+              tipe = media.endsWith('.mp4') ? 'video' : 'gif'
+              reply(`Error`)
 })
-              } else {
-              reply(`Kirim gambar dengan caption ${prefix}sticker\nDurasi Sticker Video 1-9 Detik`)
+             .on('end', function () {
+              console.log('Finish')
+              nino.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek })
+              fs.unlinkSync(media)
+              fs.unlinkSync(ran)
+})
+             .addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+             .toFormat('webp')
+             .save(ran)
+      } else {
+              reply('Reply Gambar/video minimal 6 detik')
 }
               break
           case 'tovideo':
@@ -804,7 +913,7 @@ _*Tunggu Proses Upload Media......*_`
               mp4 = await getBuffer(a.result)
               nino.sendMessage(from, mp4, video, {mimetype: 'video/mp4', quoted: mek, caption: mess.success})
               fs.unlinkSync(mediaaa)
-              } else {
+          } else {
               reply(mess.wrongFormat)
 }
               break
@@ -821,7 +930,7 @@ _*Tunggu Proses Upload Media......*_`
               nino.sendMessage(from, buffer453, audio, { mimetype: 'audio/mp4', quoted: mek })
               fs.unlinkSync(ran)
 })
-              } else {
+          } else {
               reply(mess.wrongFormat)
 }
               break
@@ -865,13 +974,6 @@ _*Tunggu Proses Upload Media......*_`
               latensie = speed() - timestampe
               reply(`「 *𝙎𝙋𝙀𝙀𝘿 𝙏𝙀𝙎𝙏* 」\nMerespon dalam ${latensie.toFixed(4)} Sec 💬`)
               break
-          case 'exif':
-              if (!isOwner) return  reply(mess.only.owner)
-              if (!q) return reply(mess.wrongFormat)
-              if (!arg.split('|')) return reply(`Penggunaan ${prefix}exif nama|author`)
-              exif.create(arg.split('|')[0], arg.split('|')[1])
-              reply('sukses')
-              break	
           case 'join': 
               if (!q) return reply('Linknya?')
               if (!isOwner) return reply(mess.only.owner)
@@ -916,18 +1018,9 @@ _*Tunggu Proses Upload Media......*_`
               reply('Sukses')
 }
               break
-          case 'leaveall':
-              if (!isOwner) return  
-              let totalgroup = nino.chats.array.filter(u => u.jid.endsWith('@g.us')).map(u => u.jid)
-              for (let id of totalgroup) {
-              sendMess(id, 'Byee', null)
-              await sleep(3000)
-              nino.groupLeave(id)
-}
-              break
           case 'culik':
               if (!isOwner) return
-              if (args.length < 1) return reply('Masukin id grupnya tolol')
+              if (args.length < 1) return reply(`Example : ${prefix}culik 62813828362494-1620989304@g.us`)
               let pantek = []
               for (let i of groupMembers) {
               pantek.push(i.jid)
@@ -944,7 +1037,7 @@ _*Tunggu Proses Upload Media......*_`
               try {
               quotedText = mek.message.extendedTextMessage.contextInfo.quotedMessage.conversation
               hideTag(from, `${quotedText}`)
-              } catch {
+          } catch {
               hideTag(from, `${q}`)
 } 
               break
@@ -953,7 +1046,7 @@ _*Tunggu Proses Upload Media......*_`
               try {
               quotedText = mek.message.extendedTextMessage.contextInfo.quotedMessage.conversation
               sendBug(from, `${quotedText}`)
-              } catch {
+          } catch {
               sendBug(from, `${q}`)
 }
               break
@@ -1031,12 +1124,6 @@ _*Tunggu Proses Upload Media......*_`
               reply('Enable untuk mengaktifkan, disable untuk menonaktifkan')
 }
               break
-          case 'kickall': // Anti Banned:v
-              if (!isOwner) return
-              for (let i of groupMembers) {
-              await kickMember(from, [i.jid])
-}
-              break
           case 'kick':
               if (!isGroup) return reply(mess.only.group)
               kick(from, mentionUser)
@@ -1060,24 +1147,6 @@ _*Tunggu Proses Upload Media......*_`
           case 'sc': 
           case 'src':
               textImg(`Bot ini menggunakan sc : https://github.com/Nino-chan02/SelfBotz`)
-              break
-          case 'jadibot':
-              if (!isOwner) return  reply(mess.only.owner)
-              jadibot(reply,nino,from)
-              break
-          case 'stopjadibot':
-              stopjadibot(reply)
-              break
-          case 'listbot':
-          case 'listjadibot':
-              let jamdibot = '「 *LIST JADIBOT* 」\n\n'
-              for(let i of listjadibot) {
-              jamdibot += `*Nomor* : ${i.jid.split('@')[0]}
-*Nama* : ${i.name}
-*Device* : ${i.phone.device_manufacturer}
-*Model* : ${i.phone.device_model}\n\n`
-}
-              reply(jamdibot)
               break
           case 'get':
           case 'fetch': //ambil dari nuru
@@ -1126,6 +1195,177 @@ js = JSON.stringify(js, null, 2)
 js = '```' + js + '```'
 reply('_' + err + '_\n\n' + js)
 }
+}
+if (isTTT && isPlayer2){
+if (budy.startsWith('Y')){
+  tto = ky_ttt.filter(ghg => ghg.id.includes(from))
+  tty = tto[0]
+  angka = tto[0].angka
+  ucapan = 
+`*🎳 Game Tictactoe 🎲*
+
+Player1 @${tty.player1.split('@')[0]}=❎
+Player2 @${tty.player2.split('@')[0]}=⭕
+
+Giliran = @${tty.player1.split('@')[0]}
+
+   ${angka[1]}${angka[2]}${angka[3]}
+   ${angka[4]}${angka[5]}${angka[6]}
+   ${angka[7]}${angka[8]}${angka[9]}`
+  nino.sendMessage(from, ucapan, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1,tty.player2]}})
+}
+if (budy.startsWith('N')){
+tto = ky_ttt.filter(ghg => ghg.id.includes(from))
+tty = tto[0]
+naa = ky_ttt.filter(toek => !toek.id.includes(from)) 
+ky_ttt = naa
+nino.sendMessage(from, `Yahh @${tty.player2.split('@')[0]} Menolak:(`,text,{quoted:mek,contextInfo:{mentionedJid:[tty.player2]}})
+}
+}
+
+if (isTTT && isPlayer1){
+nuber = parseInt(budy)
+if (isNaN(nuber)) return
+if (nuber < 1 || nuber > 9) return reply('Masukan Angka Dengan Benar')
+main = ky_ttt.filter(hjh => hjh.id.includes(from)) 
+if (!tttawal.includes(main[0].angka[nuber])) return reply('Udah Di Isi, Isi Yang Lain Gan')
+if (main[0].gilir.includes(sender)) return reply('Tunggu Giliran Gan')
+s = '❎'
+main[0].angka[nuber] = s
+main[0].gilir = main[0].player1
+naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
+ky_ttt = naa
+pop = main[0]
+ky_ttt.push(pop)
+tto = ky_ttt.filter(hgh => hgh.id.includes(from))
+tty = tto[0]
+angka = tto[0].angka
+ttt = `${angka[1]}${angka[2]}${angka[3]}\n${angka[4]}${angka[5]}${angka[6]}\n${angka[7]}${angka[8]}${angka[9]}`
+
+ucapmenang = () => {
+ucapan1 = 
+`*🎳Result Game Tictactoe 🎲*
+
+*Yeyyy Permainan Di Menangkan Oleh* @${tty.player1.split('@')[0]}\n
+*Ingin bermain lagi? ${prefix}tictactoe*`
+ucapan2 = `*🎳Result Game Tictactoe 🎲*
+
+*Hasil Akhir:*
+
+${ttt}`
+nino.sendMessage(from, ucapan1, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1]}})
+naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
+return ky_ttt = naa
+}
+
+if (angka[1] == s && angka[2] == s && angka[3] == s) return ucapmenang()
+
+if (angka[1] == s && angka[4] == s && angka[7] == s) return ucapmenang()
+
+if (angka[1] == s && angka[5] == s && angka[9] == s) return ucapmenang()
+
+if (angka[2] == s && angka[5] == s && angka[8] == s) return ucapmenang()
+
+if (angka[4] == s && angka[5] == s && angka[6] == s) return ucapmenang()
+
+if (angka[7] == s && angka[8] == s && angka[9] == s) return ucapmenang()
+
+if (angka[3] == s && angka[5] == s && angka[7] == s) return ucapmenang()
+
+if (angka[3] == s && angka[6] == s && angka[9] == s) return ucapmenang()
+
+if (!ttt.includes('1️⃣') && !ttt.includes('2️⃣') && !ttt.includes('3️⃣') && ! ttt.includes('4️⃣') && !
+ttt.includes('5️⃣') && !
+ttt.includes('6️⃣') && ! ttt.includes('7️⃣') && ! ttt.includes('8️⃣') && ! ttt.includes('9️⃣')){
+ucapan1 = `*🎳 Result Game Tictactoe 🎲*
+
+*_Permainan Seri 🗿👌_*`
+ucapan2 = `*🎳 Result Game Tictactoe 🎲*
+
+*Hasil Akhir:*
+
+${ttt}`
+reply(ucapan1)
+naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
+return ky_ttt = naa
+}
+ucapan = `*🎳 Game Tictactoe 🎲*
+
+Player2 @${tty.player2.split('@')[0]}=⭕
+Player1 @${tty.player1.split('@')[0]}=❎
+
+Giliran = @${tty.player2.split('@')[0]}
+
+${ttt}`
+nino.sendMessage(from, ucapan, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1,tty.player2]}})
+}
+if (isTTT && isPlayer2){
+nuber = parseInt(budy)
+if (isNaN(nuber)) return
+if (nuber < 1 || nuber > 9) return reply('Masukan Angka Dengan Benar')
+main = ky_ttt.filter(hjh => hjh.id.includes(from)) 
+if (!tttawal.includes(main[0].angka[nuber])) return reply('Udah Di Isi, Isi Yang Lain Gan')
+if (main[0].gilir.includes(sender)) return reply('Tunggu Giliran Gan')
+s = '⭕'
+main[0].angka[nuber] = s
+main[0].gilir = main[0].player2
+naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
+ky_ttt = naa
+pop = main[0]
+ky_ttt.push(pop)
+tto = ky_ttt.filter(hgh => hgh.id.includes(from))
+tty = tto[0]
+angka = tto[0].angka
+ttt = `${angka[1]}${angka[2]}${angka[3]}\n${angka[4]}${angka[5]}${angka[6]}\n${angka[7]}${angka[8]}${angka[9]}`
+
+ucapmenang = () => {
+ucapan1 = `*🎳 Result Game Tictactoe 🎲*
+
+*Yeyyy Permainan Di Menangkan Oleh* @${tty.player2.split('@')[0]}\n
+*Ingin bermain lagi? ${prefix}tictactoe*`
+ucapan2 = `*🎳 Game Tictactoe 🎲*
+
+*Hasil Akhir:*
+
+${ttt}`
+nino.sendMessage(from, ucapan1, text, {quoted:mek, contextInfo:{mentionedJid: [tty.player2]}})
+naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
+return ky_ttt = naa
+}
+
+if (angka[1] == s && angka[2] == s && angka[3] == s) return ucapmenang()
+if (angka[1] == s && angka[4] == s && angka[7] == s) return ucapmenang()
+if (angka[1] == s && angka[5] == s && angka[9] == s) return ucapmenang()
+if (angka[2] == s && angka[5] == s && angka[8] == s) return ucapmenang()
+if (angka[4] == s && angka[5] == s && angka[6] == s) return ucapmenang()
+if (angka[7] == s && angka[8] == s && angka[9] == s) return ucapmenang()
+if (angka[3] == s && angka[5] == s && angka[7] == s) return ucapmenang()
+if (angka[3] == s && angka[6] == s && angka[9] == s) return ucapmenang()
+if (!ttt.includes('1️⃣') && !ttt.includes('2️⃣') && !ttt.includes('3️⃣') && ! ttt.includes('4️⃣') && !
+ttt.includes('5️⃣') && !
+ttt.includes('6️⃣') && ! ttt.includes('7️⃣') && ! ttt.includes('8️⃣') && ! ttt.includes('9️⃣')){
+ucapan1 = `*??Result Game Tictactoe ??*
+
+*_Permainan Seri🗿👌*`
+ucapan2 = `*🎳 Result Game Tictactoe 🎲*
+
+*Hasil Akhir:*
+
+${ttt}`
+reply(ucapan1)
+naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
+return ky_ttt = naa
+}
+ucapan = `*🎳 Game Tictactoe 🎲*
+
+Player1 @${tty.player1.split('@')[0]}=⭕
+Player2 @${tty.player2.split('@')[0]}=❎
+   
+Giliran = @${tty.player1.split('@')[0]}
+
+${ttt}`
+ nino.sendMessage(from, ucapan, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1,tty.player2]}})
+} else {
 }
 if (isGroup && budy != undefined) {
 } else {

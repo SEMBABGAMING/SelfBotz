@@ -1,5 +1,5 @@
 {
-  "name": "SelfBotz", 
+  "name": "SelfBotz",
   "version": "1.0.0",
   "description": "Gak Ada",
   "main": "main.js",
@@ -12,7 +12,7 @@
   },
   "author": "nino",
   "dependencies": {
-    "@adiwajshing/baileys": "^3.5.2",
+    "@adiwajshing/baileys": "^3.4.1",
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
     "figlet": "^1.5.0",
@@ -22,7 +22,6 @@
     "fs-extra": "^10.0.0",
     "g-i-s": "^2.1.6",
     "google-it": "^1.6.2",
-    "hxz-api": "^1.0.1",
     "jsdom": "^16.6.0",
     "moment-timezone": "^0.5.33",
     "ms": "^2.1.3",
