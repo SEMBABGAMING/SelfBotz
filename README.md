@@ -31,7 +31,7 @@
 
 
 ## Edit file
-- Change ownerNumber on [https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L3)
+- Change ownerNumber on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L3)
 - Change Prefix on [this section](https://github.com/SelfBotz/blob/main/setting.json#L2)
 - Change lolkey on [this section](https://github.com/SelfBotz/blob/main/setting.json#L7)
 - You can add fiture on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js)
