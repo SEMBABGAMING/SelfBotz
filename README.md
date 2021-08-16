@@ -22,7 +22,8 @@
 | **CEK DISINI** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L360) |
 | :---------------------------------------------: | :-----------: |
 
-## <IMG src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Point_Down.gif" width="29px"> New Update
+
+## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Point_Down.gif" width="29px"> New Update
 | NAMA FITUR | CEK DISINI |
 |--------|--------|
 | **FITUR GAME** |[HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L473) |
