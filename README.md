@@ -32,13 +32,12 @@
 
 ## Edit file
 - Change ownerNumber on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L3)
-- Change Prefix on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L2)
 - Change lolkey on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L7)
 - You can add fiture on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js)
 - Delete nino.json jika ingin memunculkan Qr Baru
 
 
-# Thanks To
+## Thanks To
 * [`Baileys`](https://github.com/adiwajshing/Baileys)
 * [`Arip`](https://github.com/Akkun3704)
 * [`Hexa`](https://github.com/Hexagonz)
