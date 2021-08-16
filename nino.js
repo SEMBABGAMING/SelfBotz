@@ -38,7 +38,6 @@ const toMs = require('ms')
 const axios = require("axios")
 const fs = require("fs-extra")
 const { promisify, util } = require('util')
-const qrcodes = require('qrcode');
 const googleIt = require('google-it')
 const os = require('os');
 
