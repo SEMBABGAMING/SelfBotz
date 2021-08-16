@@ -19,7 +19,7 @@
 | **IMAGEMAGICK** | [HERE](https://github.com/DuckyTeam/heroku-buildpack-imagemagick) |
 
 ## Features
-| **cek disini** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L360) |
+| **CEK DISINI** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L360) |
 | :---------------------------------------------: | :-----------: |
 
 ## Connect With Me
