@@ -35,12 +35,12 @@ const starts = async (nino = new WAConnection()) => {
 	// Menghubungkan
 	fs.existsSync(`./${setting.sessionName}.json`) && nino.loadAuthInfo(`./${setting.sessionName}.json`)
 	nino.on('connecting', () => {
-		console.log(color('[ SYSTEM ]', 'yellow'), color(' ⏳ Connecting...'));
+		console.log(color('[ SYSTEM ]', 'cyan'), color(' ⏳ Connecting...'));
 	})
 
 	//connect
 	nino.on('open', () => {
-		console.log(color('[ SYSTEM ]', 'yellow'), color('Bot is now online!'));
+		console.log(color('[ SYSTEM ]', 'cyan'), color('Bot is now online!'));
 	})
 
 	// session
