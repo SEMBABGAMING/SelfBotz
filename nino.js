@@ -394,7 +394,6 @@ module.exports = nino = async (nino, mek) => {
 • ${prefix}google
 • ${prefix}ytsearch
 • ${prefix}pinterest
-• ${prefix}ytdesc
 • ${prefix}ghsearch
 
 *SESSION*
@@ -676,12 +675,6 @@ _*Tunggu Proses Upload Media......*_`
               ren = `${g.download[2].url}`
               sendMediaURL(from,ren,'Done')
 })
-              break
-          case 'ytdesc':
-              if (args.length < 1) return reply('Video/Link Yt Nya Mana? ')
-              teks = encodeURIComponent(q)
-              res = await yts(teks)
-              reply(res.all[0].description)
               break
           case 'waifu':
           case 'loli':
