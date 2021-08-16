@@ -31,9 +31,9 @@
 
 
 ## Edit file
-- Change ownerNumber on [this section](https://github.com/Nino-chan02/SelfBotz/blob/df8c08093bfd6133745ff69525d704cebbb920f5/setting.json#L2)
-- Change botName on [this section](https://github.com/Xinz-Team/XinzBot/blob/df8c08093bfd6133745ff69525d704cebbb920f5/config.json#L5)
-- Change lolkey on [this section](https://github.com/Xinz-Team/XinzBot/blob/df8c08093bfd6133745ff69525d704cebbb920f5/config.json#L7)
+- Change ownerNumber on [https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L3)
+- Change Prefix on [this section](https://github.com/SelfBotz/blob/main/setting.json#L2)
+- Change lolkey on [this section](https://github.com/SelfBotz/blob/main/setting.json#L7)
 - You can add fiture on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js)
 - Delete nino.json jika ingin memunculkan Qr Baru
 
