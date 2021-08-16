@@ -28,7 +28,6 @@
     "node-fetch": "^2.6.1",
     "os": "^0.1.2",
     "parse-ms": "^2.1.0",
-    "qrcode": "^1.4.4",
     "request": "^2.88.2",
     "spinnies": "^0.5.1",
     "twitter-url-direct": "^1.0.1",
