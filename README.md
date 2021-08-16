@@ -22,13 +22,6 @@
 | **CEK DISINI** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L360) |
 | :---------------------------------------------: | :-----------: |
 
-## Connect With Me
-<p align="center">
- <a href="https://instagram.com/nino.chan26"><img alt="Instagram" src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=black"/></a><a href="https://wa.me/+6288286421519"><img alt="WhatsApp" src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=black"/></a>
- <a href="https://youtube.com/channel/UCofvtddjxVV_2gOAqGen_sg"><img src="https://img.shields.io/badge/YouTube-OhMyNino?style=for-the-badge&logo=youtube&logoColor=ff0000&link=https://youtube.com/channel/UCofvtddjxVV_2gOAqGen_sg" />
- <a name=Nino-chan02&label=VIEWS&style=flat-square&color=red"/>
-</p>
-
 
 ## Edit file
 - Change ownerNumber on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L3)
@@ -44,3 +37,11 @@
 * [`Galang`](https://github.com/Zobin33)
 * [`Franky`](https://github.com/Franky404)
 * [`Arya`](https://github.com/Arya-was)
+
+
+## Connect With Me
+<p align="center">
+ <a href="https://instagram.com/nino.chan26"><img alt="Instagram" src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=black"/></a><a href="https://wa.me/+6288286421519"><img alt="WhatsApp" src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=black"/></a>
+ <a href="https://youtube.com/channel/UCofvtddjxVV_2gOAqGen_sg"><img src="https://img.shields.io/badge/YouTube-OhMyNino?style=for-the-badge&logo=youtube&logoColor=ff0000&link=https://youtube.com/channel/UCofvtddjxVV_2gOAqGen_sg" />
+ <a name=Nino-chan02&label=VIEWS&style=flat-square&color=red"/>
+</p>
