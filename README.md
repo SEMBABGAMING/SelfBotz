@@ -23,13 +23,6 @@
 | :---------------------------------------------: | :-----------: |
 
 
-## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Point_Down.gif" width="29px"> New Update
-| NAMA FITUR | CEK DISINI |
-|--------|--------|
-| **FITUR GAME** |[HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L472) |
-| **SEWA BOT EXPIRED** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L539) |
-
-
 ## Edit file
 - Change ownerNumber on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L3)
 - Change lolkey on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L7)
