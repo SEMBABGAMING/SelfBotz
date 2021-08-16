@@ -843,9 +843,14 @@ _*Tunggu Proses Upload Media......*_`
           case 'tulis':
               if (args.length < 1) return reply('Yang mau di tulis apaan?')
               teks = args.join(' ')
+              reply(mess.wait)
               nulis = encodeURIComponent(teks)
-              buff = await getBuffer(`https://api.lolhuman.xyz/api/nulis?apikey=${setting.lolkey}&text=${nulis}`)
-              nino.sendMessage(from, buff, image, {quoted: mek, caption: mess.success})
+              res = await axios.get(`https://dt-04.herokuapp.com/nulis?text=${nulis}`)
+              if (res.data.error) return reply(res.data.error)
+              buff = Buffer.from(res.data.result.split(',')[1], 'base64')
+              nino.sendMessage(from, buff, image, {quoted: mek, caption: mess.success}).catch(e => {
+              return reply('_[ ! ] Error Gagal Dalam Mendownload Dan Mengirim File_')
+})
               break
 //------------------< Ingfo Bot >-------------------
           case 'runtime':
