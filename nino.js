@@ -181,7 +181,6 @@ module.exports = nino = async (nino, mek) => {
         const mention = typeof(mentionByTag) == 'string' ? [mentionByTag] : mentionByTag
         mention != undefined ? mention.push(mentionByreply) : []
         const mentionUser = mention != undefined ? mention.filter(n => n) : []
-		
 		idttt = []
 	    players1 = []
 	    players2 = []
@@ -195,7 +194,6 @@ module.exports = nino = async (nino, mek) => {
 	    const isTTT = isGroup ? idttt.includes(from) : false
 	    isPlayer1 = isGroup ? players1.includes(sender) : false
         isPlayer2 = isGroup ? players2.includes(sender) : false
-		
         const isOwner = ownerNumber.includes(sender)
         const isWelkom = isGroup ? welkom.includes(from) : false
         const isSewa = _sewa.checkSewaGroup(from, sewa)
@@ -474,6 +472,14 @@ https://github.com/Nino-chan02/SelfBotz`
               mentions(teksnyee, cemde, true)
               break
 //------------------< Game >-------------------
+        case 'delsesittt':
+        case 'resetgame':
+              if (!isGroup) return reply(mess.only.group)
+              if (!isTTT) return reply('Tidak Ada Permainan Di Grup Ini')
+              naa = ky_ttt.filter(toek => !toek.id.includes(from)) 
+              ky_ttt = naa 
+              reply('Sukses Mereset Game')
+              break
         case 'tictactoe':
         case 'ttt':
               if (!isGroup) return reply(mess.only.group)
@@ -494,14 +500,6 @@ https://github.com/Nino-chan02/SelfBotz`
 Ketik Y/N untuk menerima atau menolak permainan
 
 Ket : Ketik ${prefix}resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {contextInfo: {mentionedJid: [player2]}})
-              break
-        case 'delsesittt':
-        case 'resetgame':
-              if (!isGroup) return reply(mess.only.group)
-              if (!isTTT) return reply('Tidak Ada Permainan Di Grup Ini')
-              naa = ky_ttt.filter(toek => !toek.id.includes(from)) 
-              ky_ttt = naa 
-              reply('Sukses Mereset Game')
               break
         case 'family100':
               if (game.isfam(from, family100)) return reply(`Masih ada soal yang belum di selesaikan`)
@@ -1193,7 +1191,7 @@ Giliran = @${tty.player1.split('@')[0]}
    ${angka[4]}${angka[5]}${angka[6]}
    ${angka[7]}${angka[8]}${angka[9]}`
   nino.sendMessage(from, ucapan, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1,tty.player2]}})
-}
+  }
 if (budy.startsWith('N')){
 tto = ky_ttt.filter(ghg => ghg.id.includes(from))
 tty = tto[0]
