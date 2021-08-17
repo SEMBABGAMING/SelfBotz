@@ -62,8 +62,6 @@ const truth = JSON.parse(fs.readFileSync('./database/truth.json'))
 const dare = JSON.parse(fs.readFileSync('./database/dare.json'))
 const pantekk = '```'
 
-ky_ttt = []
-tttawal= ["0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"]
 hit_today = []
 banChats = true
 
@@ -136,7 +134,6 @@ module.exports = nino = async (nino, mek) => {
 		m = simple.smsg(nino, mek)
 		global.blocked
 		global.prefix
-		global.ky_ttt
 		mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
 		const { text, extendedText, contact, location, liveLocation, image, video, sticker, document, audio, product } = MessageType
 		const tanggal = moment.tz('Asia/Jakarta').format('dddd') + ', ' + moment.tz('Asia/Jakarta').format('LL')
@@ -181,19 +178,7 @@ module.exports = nino = async (nino, mek) => {
         const mention = typeof(mentionByTag) == 'string' ? [mentionByTag] : mentionByTag
         mention != undefined ? mention.push(mentionByreply) : []
         const mentionUser = mention != undefined ? mention.filter(n => n) : []
-		idttt = []
-	    players1 = []
-	    players2 = []
-	    gilir = []
-	    for (let t of ky_ttt){
-	    idttt.push(t.id)
-	    players1.push(t.player1)
-	    players2.push(t.player2)
-	    gilir.push(t.gilir)
-}
-	    const isTTT = isGroup ? idttt.includes(from) : false
-	    isPlayer1 = isGroup ? players1.includes(sender) : false
-        isPlayer2 = isGroup ? players2.includes(sender) : false
+		
         const isOwner = ownerNumber.includes(sender)
         const isWelkom = isGroup ? welkom.includes(from) : false
         const isSewa = _sewa.checkSewaGroup(from, sewa)
@@ -320,18 +305,6 @@ module.exports = nino = async (nino, mek) => {
       // Sewa
         _sewa.expiredCheck(nino, sewa)
         
-      // GAME 
-        const getWin = (userId) => {
-              let position = false
-              Object.keys(_win).forEach((i) => {
-              if (_win[i].jid === userId) {
-              position = i
-       }
-        })
-              if (position !== false) {
-              return _win[position].win
-            }
-        }
              // Game
               game.cekWaktuFam(nino, family100)
               game.cekWaktuTG(nino, tebakgambar)
@@ -435,7 +408,6 @@ module.exports = nino = async (nino, mek) => {
 
 *GAME*
 • ${prefix}tod
-• ${prefix}tictactoe
 • ${prefix}family100
 • ${prefix}tebakgambar
 
@@ -472,35 +444,6 @@ https://github.com/Nino-chan02/SelfBotz`
               mentions(teksnyee, cemde, true)
               break
 //------------------< Game >-------------------
-        case 'delsesittt':
-        case 'resetgame':
-              if (!isGroup) return reply(mess.only.group)
-              if (!isTTT) return reply('Tidak Ada Permainan Di Grup Ini')
-              naa = ky_ttt.filter(toek => !toek.id.includes(from)) 
-              ky_ttt = naa 
-              reply('Sukses Mereset Game')
-              break
-        case 'tictactoe':
-        case 'ttt':
-              if (!isGroup) return reply(mess.only.group)
-              if (args.length < 1) return reply('Tag Lawan Anda! ')
-              if (isTTT) return reply('Sedang Ada Permainan Di Grub Ini, Harap Tunggu')
-              if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target Lawan!')
-              ment = mek.message.extendedTextMessage.contextInfo.mentionedJid
-              player1 = sender
-              player2 = ment[0]
-              angka = ["0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"]
-              id = from
-              gilir = player2
-              ky_ttt.push({player1,player2,id,angka,gilir})
-              nino.sendMessage(from, 
-`*🎳 Memulai Game Tictactoe 🎲*
-
-[@${player2.split('@')[0]}] Menantang anda untuk menjadi lawan Game🔥
-Ketik Y/N untuk menerima atau menolak permainan
-
-Ket : Ketik ${prefix}resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {contextInfo: {mentionedJid: [player2]}})
-              break
         case 'family100':
               if (game.isfam(from, family100)) return reply(`Masih ada soal yang belum di selesaikan`)
               anu = await axios.get(`http://api.lolhuman.xyz/api/tebak/family100?apikey=${setting.lolkey}`)
@@ -1174,177 +1117,6 @@ _*Tunggu Proses Upload Media......*_`
 }
               break
 default:
-if (isTTT && isPlayer2){
-if (budy.startsWith('Y')){
-  tto = ky_ttt.filter(ghg => ghg.id.includes(from))
-  tty = tto[0]
-  angka = tto[0].angka
-  ucapan = 
-`*🎳 Game Tictactoe 🎲*
-
-Player1 @${tty.player1.split('@')[0]}=❎
-Player2 @${tty.player2.split('@')[0]}=⭕
-
-Giliran = @${tty.player1.split('@')[0]}
-
-   ${angka[1]}${angka[2]}${angka[3]}
-   ${angka[4]}${angka[5]}${angka[6]}
-   ${angka[7]}${angka[8]}${angka[9]}`
-  nino.sendMessage(from, ucapan, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1,tty.player2]}})
-  }
-if (budy.startsWith('N')){
-tto = ky_ttt.filter(ghg => ghg.id.includes(from))
-tty = tto[0]
-naa = ky_ttt.filter(toek => !toek.id.includes(from)) 
-ky_ttt = naa
-nino.sendMessage(from, `Yahh @${tty.player2.split('@')[0]} Menolak:(`,text,{quoted:mek,contextInfo:{mentionedJid:[tty.player2]}})
-}
-}
-
-if (isTTT && isPlayer1){
-nuber = parseInt(budy)
-if (isNaN(nuber)) return
-if (nuber < 1 || nuber > 9) return reply('Masukan Angka Dengan Benar')
-main = ky_ttt.filter(hjh => hjh.id.includes(from)) 
-if (!tttawal.includes(main[0].angka[nuber])) return reply('Udah Di Isi, Isi Yang Lain Gan')
-if (main[0].gilir.includes(sender)) return reply('Tunggu Giliran Gan')
-s = '❎'
-main[0].angka[nuber] = s
-main[0].gilir = main[0].player1
-naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
-ky_ttt = naa
-pop = main[0]
-ky_ttt.push(pop)
-tto = ky_ttt.filter(hgh => hgh.id.includes(from))
-tty = tto[0]
-angka = tto[0].angka
-ttt = `${angka[1]}${angka[2]}${angka[3]}\n${angka[4]}${angka[5]}${angka[6]}\n${angka[7]}${angka[8]}${angka[9]}`
-
-ucapmenang = () => {
-ucapan1 = 
-`*🎳Result Game Tictactoe 🎲*
-
-*Yeyyy Permainan Di Menangkan Oleh* @${tty.player1.split('@')[0]}\n
-*Ingin bermain lagi? ${prefix}tictactoe*`
-ucapan2 = `*🎳Result Game Tictactoe 🎲*
-
-*Hasil Akhir:*
-
-${ttt}`
-nino.sendMessage(from, ucapan1, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1]}})
-naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
-return ky_ttt = naa
-}
-
-if (angka[1] == s && angka[2] == s && angka[3] == s) return ucapmenang()
-
-if (angka[1] == s && angka[4] == s && angka[7] == s) return ucapmenang()
-
-if (angka[1] == s && angka[5] == s && angka[9] == s) return ucapmenang()
-
-if (angka[2] == s && angka[5] == s && angka[8] == s) return ucapmenang()
-
-if (angka[4] == s && angka[5] == s && angka[6] == s) return ucapmenang()
-
-if (angka[7] == s && angka[8] == s && angka[9] == s) return ucapmenang()
-
-if (angka[3] == s && angka[5] == s && angka[7] == s) return ucapmenang()
-
-if (angka[3] == s && angka[6] == s && angka[9] == s) return ucapmenang()
-
-if (!ttt.includes('1️⃣') && !ttt.includes('2️⃣') && !ttt.includes('3️⃣') && ! ttt.includes('4️⃣') && !
-ttt.includes('5️⃣') && !
-ttt.includes('6️⃣') && ! ttt.includes('7️⃣') && ! ttt.includes('8️⃣') && ! ttt.includes('9️⃣')){
-ucapan1 = `*🎳 Result Game Tictactoe 🎲*
-
-*_Permainan Seri 🗿👌_*`
-ucapan2 = `*🎳 Result Game Tictactoe 🎲*
-
-*Hasil Akhir:*
-
-${ttt}`
-reply(ucapan1)
-naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
-return ky_ttt = naa
-}
-ucapan = `*🎳 Game Tictactoe 🎲*
-
-Player2 @${tty.player2.split('@')[0]}=⭕
-Player1 @${tty.player1.split('@')[0]}=❎
-
-Giliran = @${tty.player2.split('@')[0]}
-
-${ttt}`
-nino.sendMessage(from, ucapan, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1,tty.player2]}})
-}
-if (isTTT && isPlayer2){
-nuber = parseInt(budy)
-if (isNaN(nuber)) return
-if (nuber < 1 || nuber > 9) return reply('Masukan Angka Dengan Benar')
-main = ky_ttt.filter(hjh => hjh.id.includes(from)) 
-if (!tttawal.includes(main[0].angka[nuber])) return reply('Udah Di Isi, Isi Yang Lain Gan')
-if (main[0].gilir.includes(sender)) return reply('Tunggu Giliran Gan')
-s = '⭕'
-main[0].angka[nuber] = s
-main[0].gilir = main[0].player2
-naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
-ky_ttt = naa
-pop = main[0]
-ky_ttt.push(pop)
-tto = ky_ttt.filter(hgh => hgh.id.includes(from))
-tty = tto[0]
-angka = tto[0].angka
-ttt = `${angka[1]}${angka[2]}${angka[3]}\n${angka[4]}${angka[5]}${angka[6]}\n${angka[7]}${angka[8]}${angka[9]}`
-
-ucapmenang = () => {
-ucapan1 = `*🎳 Result Game Tictactoe 🎲*
-
-*Yeyyy Permainan Di Menangkan Oleh* @${tty.player2.split('@')[0]}\n
-*Ingin bermain lagi? ${prefix}tictactoe*`
-ucapan2 = `*🎳 Game Tictactoe 🎲*
-
-*Hasil Akhir:*
-
-${ttt}`
-nino.sendMessage(from, ucapan1, text, {quoted:mek, contextInfo:{mentionedJid: [tty.player2]}})
-naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
-return ky_ttt = naa
-}
-
-if (angka[1] == s && angka[2] == s && angka[3] == s) return ucapmenang()
-if (angka[1] == s && angka[4] == s && angka[7] == s) return ucapmenang()
-if (angka[1] == s && angka[5] == s && angka[9] == s) return ucapmenang()
-if (angka[2] == s && angka[5] == s && angka[8] == s) return ucapmenang()
-if (angka[4] == s && angka[5] == s && angka[6] == s) return ucapmenang()
-if (angka[7] == s && angka[8] == s && angka[9] == s) return ucapmenang()
-if (angka[3] == s && angka[5] == s && angka[7] == s) return ucapmenang()
-if (angka[3] == s && angka[6] == s && angka[9] == s) return ucapmenang()
-if (!ttt.includes('1️⃣') && !ttt.includes('2️⃣') && !ttt.includes('3️⃣') && ! ttt.includes('4️⃣') && !
-ttt.includes('5️⃣') && !
-ttt.includes('6️⃣') && ! ttt.includes('7️⃣') && ! ttt.includes('8️⃣') && ! ttt.includes('9️⃣')){
-ucapan1 = `*??Result Game Tictactoe ??*
-
-*_Permainan Seri🗿👌*`
-ucapan2 = `*🎳 Result Game Tictactoe 🎲*
-
-*Hasil Akhir:*
-
-${ttt}`
-reply(ucapan1)
-naa = ky_ttt.filter(hhg => !hhg.id.includes(from))
-return ky_ttt = naa
-}
-ucapan = `*🎳 Game Tictactoe 🎲*
-
-Player1 @${tty.player1.split('@')[0]}=⭕
-Player2 @${tty.player2.split('@')[0]}=❎
-   
-Giliran = @${tty.player1.split('@')[0]}
-
-${ttt}`
- nino.sendMessage(from, ucapan, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1,tty.player2]}})
-} else {
-}
 if (budy.startsWith('=>')){
 if (!isOwner) return
 try {
