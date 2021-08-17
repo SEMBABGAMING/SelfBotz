@@ -6,7 +6,7 @@ Mau recode? ya terserah asal jangan ganti WaterMark
 SC nya jangan dijual
 */
 const {
-    WAConnection,
+    WAConnection: _WAConnection,
 	MessageType,
 	Presence,
 	MessageOptions,
@@ -23,6 +23,8 @@ const {
 	processTime,
 	Browsers
 } = require("@adiwajshing/baileys")
+const simple = require('./lib/simple.js')
+const WAConnection = simple.WAConnection(_WAConnection)
 const moment = require("moment-timezone");
 moment.tz.setDefault("Asia/Jakarta").locale("id");
 const speed = require('performance-now')
@@ -131,6 +133,7 @@ module.exports = nino = async (nino, mek) => {
 		if (!mek.message) return
 		if (mek.key && mek.key.remoteJid == 'status@broadcast') return
 		if (mek.key.id.startsWith('3EB0') && mek.key.id.length === 12) return
+		m = simple.smsg(nino, mek)
 		global.blocked
 		global.prefix
 		mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
@@ -1146,6 +1149,12 @@ _*Tunggu Proses Upload Media......*_`
           case 'sc': 
           case 'src':
               textImg(`Bot ini menggunakan sc : https://github.com/Nino-chan02/SelfBotz`)
+              break
+          case 'q':
+              if (!m.quoted) return reply( 'reply pesan!')
+              let qu = nino.serializeM(await m.getQuotedObj())
+              if (!qu.quoted) return reply( 'pesan yang anda reply tidak mengandung reply!')
+              await qu.quoted.copyNForward(m.chat, true)
               break
           case 'get':
           case 'fetch': //ambil dari nuru
