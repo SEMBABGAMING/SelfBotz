@@ -18,10 +18,6 @@
 | **WEBP** | [HERE](https://github.com/clhuang/heroku-buildpack-webp-binaries) |
 | **IMAGEMAGICK** | [HERE](https://github.com/DuckyTeam/heroku-buildpack-imagemagick) |
 
-## Features
-| **CEK DISINI** | [HERE](https://github.com/Nino-chan02/SelfBotz/blob/main/nino.js#L381) |
-| :---------------------------------------------: | :-----------: |
-
 
 ## Edit file
 - Change ownerNumber on [this section](https://github.com/Nino-chan02/SelfBotz/blob/main/setting.json#L3)
