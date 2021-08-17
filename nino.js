@@ -546,6 +546,57 @@ Ket : Ketik ${prefix}resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text,
         	  banChats = true
               textImg(`Success Activated Mode Self`)
               break
+          case 'ban':
+              if (!isOwner) return reply(mess.OnlyOwner)
+              if (mek.mentionedJid.length !== 0){
+                 for (let i = 0; i < mek.mentionedJid.length; i++){
+                      addBanned(mek.mentionedJid[0], args[1], ban)
+          }
+              reply('Sukses')
+            } else if (mek.quoted) {
+              if (mek.quoted.sender === ownerNumber) return reply(`Tidak bisa ban Owner`)
+              addBanned(mek.quoted.sender, args[0], ban)
+              reply(`Sukses ban target`)
+            } else if (!isNaN(args[0])) {
+               addBanned(args[0] + '@s.whatsapp.net', args[1], ban)
+               reply('Sukses')
+            } else {
+               reply(`Kirim perintah ${prefix}ban @tag atau nomor atau reply pesan orang yang ingin di ban`)
+       }
+               break
+           case 'unban':
+               if (!isOwner) return reply(mess.only.owner)
+               if (mek.mentionedJid.length !== 0){
+                 for (let i = 0; i < mek.mentionedJid.length; i++){
+                   unBanned(mek.mentionedJid[i], ban)
+         }
+               reply('Sukses')
+             }if (mek.quoted) {
+                unBanned(mek.quoted.sender, ban)
+                reply(`Sukses unban target`) 
+             } else if (!isNaN(args[0])) {
+                unBanned(args[0] + '@s.whatsapp.net', ban)
+                reply('Sukses')
+           } else {
+                reply(`Kirim perintah ${prefix}unban @tag atau nomor atau reply pesan orang yang ingin di unban`)
+        }
+                break
+            case 'listban':
+                txtx = `List Banned\nJumlah : ${ban.length}\n\n`
+                menx = [];
+                for (let i of ban){
+                   menx.push(i.id)
+                   txtx += `*ID :* @${i.id.split("@")[0]}\n`
+                    if (i.expired === 'PERMANENT'){
+                      cekvip = 'PERMANENT'
+                       txtx += `*Expire :* PERMANENT\n\n`
+                   } else {
+                       cekvip = ms(i.expired - Date.now())
+                       txtx += `*Expire :* ${cekvip.days} day(s) ${cekvip.hours} hour(s) ${cekvip.minutes} minute(s) ${cekvip.seconds} second(s)\n\n`
+                 }
+            }
+              mentions(txtx, menx, true)
+              break
 //------------------< Sewa >-------------------
           case 'sewa':
               if (!isGroup)return reply(mess.only.group)
