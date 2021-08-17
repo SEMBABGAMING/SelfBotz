@@ -186,6 +186,13 @@ module.exports = nino = async (nino, mek) => {
         const isUrl = (url) => {
             return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
         }
+        if (m.isGroup && m.mtype == 'viewOnceMessage'){
+	    if (m.fromMe) return
+            let message = {...mek}
+            message.message = mek.message.viewOnceMessage.message
+            message.message[Object.keys(message.message)[0]].viewOnce = false
+            nino.reply(from, 'ViewOnce detected!', mek).then(() => nino.forwardMessage(from, message))
+}
         function monospace(string) {
             return '```' + string + '```'
         }   
