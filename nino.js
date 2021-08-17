@@ -49,6 +49,7 @@ const exif = new Exif();
 
 const { getBuffer, getGroupAdmins, getRandom, runtime, pickRandom, clockString, sleep } = require('./lib/myfunc')
 const { fetchJson, getBase64, kyun, createExif } = require('./lib/fetch')
+const { addBanned, unBanned, BannedExpired, cekBannedUser } = require("./lib/banned");
 const { color, bgcolor } = require('./lib/color')
 const { mess } = require('./message/mess')
 const _sewa = require("./lib/sewa");
@@ -82,6 +83,7 @@ prefix = setting.prefix
 let welkom = JSON.parse(fs.readFileSync('./database/welcome.json'))
 let _scommand = JSON.parse(fs.readFileSync('./database/scommand.json'))
 let sewa = JSON.parse(fs.readFileSync('./database/sewa.json'));
+let ban = JSON.parse(fs.readFileSync('./database/ban.json'));
 
 // Sticker Cmd
 const addCmd = (id, command) => {
@@ -198,6 +200,7 @@ module.exports = nino = async (nino, mek) => {
         const isOwner = ownerNumber.includes(sender)
         const isWelkom = isGroup ? welkom.includes(from) : false
         const isSewa = _sewa.checkSewaGroup(from, sewa)
+        const isBan = cekBannedUser(sender, ban)
         
         const isUrl = (url) => {
             return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
@@ -320,6 +323,10 @@ module.exports = nino = async (nino, mek) => {
 
       // Sewa
         _sewa.expiredCheck(nino, sewa)
+        
+      // Banned
+        if (isBan) return
+        BannedExpired(ban)
         
       // GAME 
         const getWin = (userId) => {
