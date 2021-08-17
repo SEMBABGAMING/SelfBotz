@@ -136,6 +136,7 @@ module.exports = nino = async (nino, mek) => {
 		m = simple.smsg(nino, mek)
 		global.blocked
 		global.prefix
+		global.ky_ttt
 		mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
 		const { text, extendedText, contact, location, liveLocation, image, video, sticker, document, audio, product } = MessageType
 		const tanggal = moment.tz('Asia/Jakarta').format('dddd') + ', ' + moment.tz('Asia/Jakarta').format('LL')
@@ -1175,35 +1176,6 @@ _*Tunggu Proses Upload Media......*_`
 }
               break
 default:
-if (budy.startsWith('=>')){
-if (!isOwner) return
-try {
-return nino.sendMessage(from, 
-`${pantekk}📥 Input: ${budy.slice(3)}
-📤 OutPut: 
-${JSON.stringify(eval(budy.slice(2)),null,'\t')}
-${pantekk}`
-,text, {quoted:mek })
-} catch(err) {
-e = String(err)
-reply(`${pantekk} "err" :  "${e}"${pantekk}`)
-}
-}
-if (!isOwner) return
-if (budy.startsWith('> ')) {
-try {
-console.log(color('[ EVAL ]', 'pink'), color(time), budy, color('dari', 'yellow'), pushname, color('di'), isGroup ? groupName : 'Private Chat')
-reply(require('util').format(eval(`;(async () => { ${budy.slice(2)} })()`)))
-} catch(e) {
-console.log(e)
-err = String(e)
-js = JSON.stringify(e, null, 2)
-if (js == '{}') js = { err }
-js = JSON.stringify(js, null, 2)
-js = '```' + js + '```'
-reply('_' + err + '_\n\n' + js)
-}
-}
 if (isTTT && isPlayer2){
 if (budy.startsWith('Y')){
   tto = ky_ttt.filter(ghg => ghg.id.includes(from))
@@ -1374,6 +1346,35 @@ Giliran = @${tty.player1.split('@')[0]}
 ${ttt}`
  nino.sendMessage(from, ucapan, text, {quoted: mek, contextInfo:{mentionedJid: [tty.player1,tty.player2]}})
 } else {
+}
+if (budy.startsWith('=>')){
+if (!isOwner) return
+try {
+return nino.sendMessage(from, 
+`${pantekk}📥 Input: ${budy.slice(3)}
+📤 OutPut: 
+${JSON.stringify(eval(budy.slice(2)),null,'\t')}
+${pantekk}`
+,text, {quoted:mek })
+} catch(err) {
+e = String(err)
+reply(`${pantekk} "err" :  "${e}"${pantekk}`)
+}
+}
+if (!isOwner) return
+if (budy.startsWith('> ')) {
+try {
+console.log(color('[ EVAL ]', 'pink'), color(time), budy, color('dari', 'yellow'), pushname, color('di'), isGroup ? groupName : 'Private Chat')
+reply(require('util').format(eval(`;(async () => { ${budy.slice(2)} })()`)))
+} catch(e) {
+console.log(e)
+err = String(e)
+js = JSON.stringify(e, null, 2)
+if (js == '{}') js = { err }
+js = JSON.stringify(js, null, 2)
+js = '```' + js + '```'
+reply('_' + err + '_\n\n' + js)
+}
 }
 if (isGroup && budy != undefined) {
 } else {
