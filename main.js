@@ -1,10 +1,12 @@
-const { WAConnection, Browsers } = require('@adiwajshing/baileys')
+const { WAConnection: _WAConnection, Browsers } = require('@adiwajshing/baileys')
 const { color, bgcolor } = require('./lib/color')
 const fs = require("fs-extra")
 const figlet = require('figlet')
 const { uncache, nocache } = require('./lib/loader')
 const setting = JSON.parse(fs.readFileSync('./setting.json'))
 const welcome = require('./message/group')
+const simple = require('./lib/simple.js')
+const WAConnection = simple.WAConnection(_WAConnection)
 baterai = 'unknown'
 charging = 'unknown'
 
