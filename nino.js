@@ -480,7 +480,7 @@ https://github.com/Nino-chan02/SelfBotz`
 			  if (mek.mentionedJid === undefined || mek.mentionedJid === null) return reply(`Kirim perintah *${prefix}tictactoe* @tag`)
 			  if (mek.mentionedJid.length !== 0) {
 			  if (mek.mentionedJid[0] === sender) return reply('Sad, main ama diri sendiri')
-					txt = `@${sender.split('@')[0]} menantang @${mek.mentionedJid[0].split('@')[0]} untuk bermain TicTacToe\n\nKirim (Y/T) untuk bermain`
+					txt = (monospace(`@${sender.split('@')[0]} menantang @${mek.mentionedJid[0].split('@')[0]} untuk bermain TicTacToe\n\nKirim (Y/T) untuk bermain`))
 					nino.reply(from, txt, mek, { contextInfo: { mentionedJid: nino.parseMention(txt) }})
 					tictactoe.push({ id: from, status: null, penantang: sender, ditantang: mek.mentionedJid[0], TicTacToe: ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'] })
 				} else {
