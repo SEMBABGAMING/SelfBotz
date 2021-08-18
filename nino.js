@@ -58,6 +58,8 @@ const { uptotele, uploadFile, RESTfulAPI, uploadImages } = require('./lib/upload
 const { mediafireDl } = require('./lib/mediafire.js')
 const { webp2gifFile, igDownloader, TiktokDownloader } = require("./lib/gif.js")
 const { y2mateA, y2mateV } = require('./lib/y2mate')
+const { isTicTacToe, getPosTic } = require('./lib/tictactoe')
+const tictac = require('./lib/tictac')
 const truth = JSON.parse(fs.readFileSync('./database/truth.json'))
 const dare = JSON.parse(fs.readFileSync('./database/dare.json'))
 const pantekk = '```'
@@ -71,6 +73,7 @@ let setting = JSON.parse(fs.readFileSync('./setting.json'))
 // Game
 let family100 = [];
 let tebakgambar = [];
+let tictactoe = [];
 
 const { owner, gamewaktu } = setting
 
@@ -474,6 +477,26 @@ https://github.com/Nino-chan02/SelfBotz`
               anih = anu.data.result.answer.toLowerCase()
               game.addgambar(from, anih, gamewaktu, tebakgambar)
               break
+        case 'tictactoe': case 'ttt': case 'ttc':
+				if (!isGroup) return reply(mess.only.group)
+				if (isTicTacToe(from, tictactoe)) return reply('Masih ada game yg blum selesai')
+				if (!q) return reply(`Kirim perintah *${prefix}tictactoe* @tag`)
+				if (mek.mentionedJid === undefined || mek.mentionedJid === null) return reply(`Kirim perintah *${prefix}tictactoe* @tag`)
+				if (mek.mentionedJid.length !== 0) {
+				if (mek.mentionedJid[0] === sender) return reply('Sad, main ama diri sendiri')
+					txt = `@${sender.split('@')[0]} menantang @${mek.mentionedJid[0].split('@')[0]} untuk bermain TicTacToe\n\nKirim (Y/T) untuk bermain`
+					nino.reply(from, txt, msg, { contextInfo: { mentionedJid: nino.parseMention(txt) }})
+					tictactoe.push({ id: from, status: null, penantang: sender, ditantang: mek.mentionedJid[0], TicTacToe: ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'] })
+				} else {
+					reply(`Kirim perintah *${prefix}tictactoe* @tag`)
+				}
+				break
+		case 'delttt': case 'delttc':
+				if (!isGroup) return reply(mess.only.group)
+				if (!isTicTacToe(from, tictactoe)) return reply('Tidak ada sesi game tictactoe di grup ini')
+				tictactoe.splice(getPosTic(from, tictactoe), 1)
+				reply('Berhasil menghapus sesi tictactoe di grup ini')
+				break
 //------------------< Public/Self >-------------------
         case 'public':
         	  if (!isOwner) return 
