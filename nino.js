@@ -71,9 +71,9 @@ let fakeimage = fs.readFileSync("./media/wpmobile.png")
 let setting = JSON.parse(fs.readFileSync('./setting.json'))
 
 // Game
+let tictactoe = [];
 let family100 = [];
 let tebakgambar = [];
-let tictactoe = [];
 
 const { owner, gamewaktu } = setting
 
@@ -191,7 +191,7 @@ module.exports = nino = async (nino, mek) => {
         }
         if (m.isGroup && m.mtype == 'viewOnceMessage'){
 	    if (m.fromMe) return
-            let message = {...mek}
+            message = {...mek}
             message.message = mek.message.viewOnceMessage.message
             message.message[Object.keys(message.message)[0]].viewOnce = false
             nino.reply(from, 'ViewOnce detected!', mek).then(() => nino.forwardMessage(from, message))
@@ -234,14 +234,6 @@ module.exports = nino = async (nino, mek) => {
         }
        const add = function(from, orangnya){
 	       nino.groupAdd(from, orangnya)
-}
-      const sendBug = async(target, teks) => {
-           if (!teks) teks = '.'
-           await nino.relayWAMessage(nino.
-           prepareMessageFromContent(target, nino.
-           prepareDisappearingMessageSettingContent(0),
-           {}),{waitForAck:true})
-           nino.sendMessage(target, teks, 'conversation')
 }
        const sendKontak = (from, nomor, nama, org = "") => {
 	       const vcard = 'BEGIN:VCARD\n' + 'VERSION:3.0\n' + 'FN:' + nama + '\n' + 'ORG:' + org + '\n' + 'TEL;type=CELL;type=VOICE;waid=' + nomor + ':+' + nomor + '\n' + 'END:VCARD'
@@ -312,8 +304,11 @@ module.exports = nino = async (nino, mek) => {
 		const isQuotedAudio = type === 'extendedTextMessage' && content.includes('audioMessage')
 		const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
 
-      // Sewa
-        _sewa.expiredCheck(nino, sewa)
+         // Sewa
+           _sewa.expiredCheck(nino, sewa)
+        
+         // TicTacToe
+              if (isTicTacToe(from, tictactoe)) tictac(prefix, tictactoe, from, sender, nino, mek)
         
              // Game
               game.cekWaktuFam(nino, family100)
@@ -418,8 +413,10 @@ module.exports = nino = async (nino, mek) => {
 
 *GAME*
 • ${prefix}tod
+• ${prefix}tictactoe
 • ${prefix}family100
 • ${prefix}tebakgambar
+
 
 *Source Code:*
 https://github.com/Nino-chan02/SelfBotz`
@@ -478,25 +475,25 @@ https://github.com/Nino-chan02/SelfBotz`
               game.addgambar(from, anih, gamewaktu, tebakgambar)
               break
         case 'tictactoe': case 'ttt': case 'ttc':
-				if (!isGroup) return reply(mess.only.group)
-				if (isTicTacToe(from, tictactoe)) return reply('Masih ada game yg blum selesai')
-				if (!q) return reply(`Kirim perintah *${prefix}tictactoe* @tag`)
-				if (mek.mentionedJid === undefined || mek.mentionedJid === null) return reply(`Kirim perintah *${prefix}tictactoe* @tag`)
-				if (mek.mentionedJid.length !== 0) {
-				if (mek.mentionedJid[0] === sender) return reply('Sad, main ama diri sendiri')
+			  if (!isGroup) return reply(mess.only.group)
+			  if (isTicTacToe(from, tictactoe)) return reply('Masih ada game yg blum selesai')
+			  if (!q) return reply(`Kirim perintah *${prefix}tictactoe* @tag`)
+			  if (mek.mentionedJid === undefined || mek.mentionedJid === null) return reply(`Kirim perintah *${prefix}tictactoe* @tag`)
+			  if (mek.mentionedJid.length !== 0) {
+			  if (mek.mentionedJid[0] === sender) return reply('Sad, main ama diri sendiri')
 					txt = `@${sender.split('@')[0]} menantang @${mek.mentionedJid[0].split('@')[0]} untuk bermain TicTacToe\n\nKirim (Y/T) untuk bermain`
-					nino.reply(from, txt, msg, { contextInfo: { mentionedJid: nino.parseMention(txt) }})
+					nino.reply(from, txt, mek, { contextInfo: { mentionedJid: nino.parseMention(txt) }})
 					tictactoe.push({ id: from, status: null, penantang: sender, ditantang: mek.mentionedJid[0], TicTacToe: ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'] })
 				} else {
 					reply(`Kirim perintah *${prefix}tictactoe* @tag`)
 				}
-				break
-		case 'delttt': case 'delttc':
-				if (!isGroup) return reply(mess.only.group)
-				if (!isTicTacToe(from, tictactoe)) return reply('Tidak ada sesi game tictactoe di grup ini')
-				tictactoe.splice(getPosTic(from, tictactoe), 1)
-				reply('Berhasil menghapus sesi tictactoe di grup ini')
-				break
+			  break
+		  case 'delttt': case 'delttc':
+			  if (!isGroup) return reply(mess.only.group)
+			  if (!isTicTacToe(from, tictactoe)) return reply('Tidak ada sesi game tictactoe di grup ini')
+			  tictactoe.splice(getPosTic(from, tictactoe), 1)
+			  reply('Berhasil menghapus sesi tictactoe di grup ini')
+			  break
 //------------------< Public/Self >-------------------
         case 'public':
         	  if (!isOwner) return 
@@ -1014,15 +1011,6 @@ _*Tunggu Proses Upload Media......*_`
           } catch {
               hideTag(from, `${q}`)
 } 
-              break
-          case 'bug':
-          case '.':
-              try {
-              quotedText = mek.message.extendedTextMessage.contextInfo.quotedMessage.conversation
-              sendBug(from, `${quotedText}`)
-          } catch {
-              sendBug(from, `${q}`)
-}
               break
           case 'wangy':
               if (!q) return
