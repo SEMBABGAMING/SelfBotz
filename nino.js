@@ -417,7 +417,6 @@ module.exports = nino = async (nino, mek) => {
 • ${prefix}family100
 • ${prefix}tebakgambar
 
-
 *Source Code:*
 https://github.com/Nino-chan02/SelfBotz`
                nino.sendMessage(from, menu, text, {quoted: mek, contextInfo: {mentionedJid: [sender], externalAdReply: { title: 'Nino Bot', thumbnailUrl: 'https://telegra.ph/file/ad408bff29a90b6627e6f.jpg', sourceUrl: 'https://github.com/Nino-chan02/' }}})
