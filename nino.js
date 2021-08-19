@@ -659,11 +659,11 @@ ${repo.open_issues} Issue${repo.description ? `
               ini_video = await getBuffer(data.result.link)
               nino.sendMessage(from, ini_video, video, { quoted: mek })
               break
-          case 'buttons4': 
+          case 'buttons4' :
               if (!q) return reply('Linknya?')
               if (!q.includes('tiktok')) return reply(mess.error.Iv)
-              data = await getBuffer(`https://api.lolhuman.xyz/api/tiktokmusic?apikey=${setting.lolkey}&url=${args[0]}`)
-              nino.sendMessage(from, data, audio, { quoted: mek })
+              data = await fetchJson(`http://zekais-api.herokuapp.com/tiktokmusic?url=${q}`)
+              sendMediaURL(from, data.mp3)
               break
           case 'buttons5':
               const mathdare = dare[Math.floor(Math.random() * (dare.length))]
